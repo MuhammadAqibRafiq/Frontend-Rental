@@ -12,4 +12,12 @@ export const apiUrls = {
     byHome: (homeId: string) => `/api/tenants/home/${homeId}`,
     detail: (id: string) => `/api/tenants/${id}`,
   },
+  bills: {
+    prepare: (tenantId: string) => `/api/bills/prepare/${tenantId}`,
+    create: "/api/bills",
+    byHome: (homeId: string, month?: string) =>
+      `/api/bills/home/${homeId}${month ? `?month=${month}` : ""}`,
+    byTenant: (tenantId: string) => `/api/bills/tenant/${tenantId}`,
+    detail: (id: string) => `/api/bills/${id}`,
+  },
 } as const;

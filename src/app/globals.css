@@ -65,3 +65,45 @@ body {
   color: var(--color-foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
+
+/* react-phone-number-input */
+.phone-input-wrapper .PhoneInput {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 2.25rem;
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--background);
+  padding: 0 0.75rem;
+  font-size: 0.875rem;
+  transition: box-shadow 0.15s;
+}
+
+.phone-input-wrapper .PhoneInput:focus-within {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.phone-input-wrapper .PhoneInputCountrySelect {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--foreground);
+}
+
+.phone-input-wrapper .PhoneInputInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 0.875rem;
+  color: var(--foreground);
+}
+
+.phone-input-wrapper .PhoneInputInput::placeholder {
+  color: var(--muted-foreground);
+}

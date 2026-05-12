@@ -1,7 +1,7 @@
 import "server-only";
 import { redirect } from "next/navigation";
 import { routes } from "./routes";
-import { clearSessionToken, getSessionToken } from "./session";
+import { getSessionToken } from "./session";
 
 const API_BASE_URL = process.env.API_BASE_URL ?? "http://localhost:4000";
 
@@ -45,16 +45,24 @@ export async function apiFetch<T>(path: string, options: ApiOptions = {}): Promi
 
   if (!res.ok) {
     if (res.status === 401 && auth) {
-      await clearSessionToken();
-      redirect(routes.login);
+      redirect(routes.logout);
     }
+    const message = extractMessage(data) ?? `Request failed with status ${res.status}`;
+    throw new ApiError(res.status, message, data);
+  }
 
-    const message =
-      (isJson && data && typeof data === "object" && "message" in data && typeof data.message === "string"
-        ? data.message
-        : null) ?? `Request failed with status ${res.status}`;
+  // Backend returns { status: false, message, data: null } with HTTP 200 on some errors
+  if (isJson && data && typeof data === "object" && "status" in data && data.status === false) {
+    const message = extractMessage(data) ?? "Something went wrong.";
     throw new ApiError(res.status, message, data);
   }
 
   return data as T;
+}
+
+function extractMessage(data: unknown): string | null {
+  if (data && typeof data === "object" && "message" in data && typeof (data as Record<string, unknown>).message === "string") {
+    return (data as Record<string, unknown>).message as string;
+  }
+  return null;
 }

@@ -8,6 +8,8 @@ export const routes = {
   dashboard: "/dashboard",
   bills: "/bills",
   users: "/users",
+
+  logout: "/api/logout",
 } as const;
 
 export const PUBLIC_ONLY_ROUTES: string[] = [routes.login, routes.register];

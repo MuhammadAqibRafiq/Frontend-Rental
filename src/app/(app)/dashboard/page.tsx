@@ -1,47 +1,53 @@
-import Link from "next/link";
-import { Receipt, Users } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { redirect } from "next/navigation";
+import { getHomes, getHome, getHomeTenants } from "@/controllers/homes.controller";
+import { Sidebar } from "@/components/dashboard/sidebar";
+import { HomeDetail } from "@/components/dashboard/home-detail";
+import { AddHomeModal } from "@/components/dashboard/add-home-modal";
 import { routes } from "@/lib/routes";
 
-export default function DashboardPage() {
+interface DashboardPageProps {
+  searchParams: Promise<{ home?: string }>;
+}
+
+export default async function DashboardPage({ searchParams }: DashboardPageProps) {
+  const { home: homeId } = await searchParams;
+
+  const rawHomes = await getHomes().catch(() => []);
+  const homes = Array.isArray(rawHomes) ? rawHomes : [];
+
+  if (homes.length === 0) {
+    return (
+      <div className="flex h-[calc(100vh-4rem)]">
+        <div className="flex flex-1 items-center justify-center text-center">
+          <div className="flex flex-col items-center gap-4">
+            <p className="text-lg font-medium">No homes yet</p>
+            <p className="text-sm text-muted-foreground">Create your first home to get started.</p>
+            <AddHomeModal />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const validIds = new Set(homes.map((h) => h.id));
+  const activeId = homeId && validIds.has(homeId) ? homeId : homes[0]?.id;
+
+  if (!activeId) return null;
+
+  // homeId in URL is stale (e.g. deleted) — redirect to first valid home
+  if (homeId && !validIds.has(homeId)) {
+    redirect(`${routes.dashboard}?home=${activeId}`);
+  }
+
+  const [home, tenants] = await Promise.all([
+    getHome(activeId),
+    getHomeTenants(activeId),
+  ]);
+
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-semibold tracking-tight">Home</h1>
-        <p className="mt-2 text-muted-foreground">Welcome back. Here&apos;s a quick look at your rentals.</p>
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-2">
-        <Link href={routes.bills}>
-          <Card className="transition-colors hover:bg-accent">
-            <CardHeader>
-              <div className="mb-2 inline-flex h-10 w-10 items-center justify-center rounded-md bg-muted">
-                <Receipt className="h-5 w-5" />
-              </div>
-              <CardTitle>Bills</CardTitle>
-              <CardDescription>Rent, utilities, and maintenance charges.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">Open the bills section →</p>
-            </CardContent>
-          </Card>
-        </Link>
-
-        <Link href={routes.users}>
-          <Card className="transition-colors hover:bg-accent">
-            <CardHeader>
-              <div className="mb-2 inline-flex h-10 w-10 items-center justify-center rounded-md bg-muted">
-                <Users className="h-5 w-5" />
-              </div>
-              <CardTitle>Users</CardTitle>
-              <CardDescription>Manage tenants across your homes.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">Open the users section →</p>
-            </CardContent>
-          </Card>
-        </Link>
-      </div>
+    <div className="flex h-[calc(100vh-4rem)] -mx-2 -my-10">
+      <Sidebar homes={homes} activeHomeId={activeId} />
+      <HomeDetail home={home} tenants={tenants} />
     </div>
   );
 }
