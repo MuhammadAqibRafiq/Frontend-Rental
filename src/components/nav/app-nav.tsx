@@ -5,7 +5,7 @@ import { routes } from "@/lib/routes";
 
 export function AppNav() {
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur">
+    <header className="sticky top-0 z-40 w-full border-b border-violet-200/50 bg-white/60 backdrop-blur-xl dark:border-violet-900/30 dark:bg-[#0d0a1a]/70">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-2">
         <Link href={routes.home} className="text-lg font-bold tracking-tight">
           App
