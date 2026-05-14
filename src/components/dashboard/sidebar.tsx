@@ -26,7 +26,7 @@ export function Sidebar({ homes, activeHomeId }: SidebarProps) {
   return (
     <aside className="flex flex-col rounded-2xl border border-border bg-white/60 overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-border px-5 py-4">
+      <div className="flex items-center justify-between border-b border-border p-[16px]">
         <div>
           <p className="text-[10.5px] font-bold uppercase tracking-[0.06em] text-muted-foreground">
             Your portfolio

@@ -21,7 +21,7 @@ export function HomeDetail({ home, tenants }: HomeDetailProps) {
     <div className="space-y-6">
       {/* Hero card */}
       <div
-        className="relative isolate overflow-hidden rounded-2xl p-7"
+        className="relative isolate overflow-hidden rounded-2xl p-[16px]"
         style={{ border: "1px solid hsl(var(--border))", background: "white" }}
       >
         {/* Decorative blob */}
@@ -53,14 +53,14 @@ export function HomeDetail({ home, tenants }: HomeDetailProps) {
               >
                 Property
               </p>
-              <div className="mt-1 flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 <h2 className="text-[26px] font-extrabold leading-tight tracking-tight">
                   {home.name}
                 </h2>
                 <DeleteHomeButton homeId={home.id} homeName={home.name} />
               </div>
               {home.address && (
-                <p className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
+                <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
                   <MapPin className="h-3.5 w-3.5 shrink-0" />
                   {home.address}
                 </p>
