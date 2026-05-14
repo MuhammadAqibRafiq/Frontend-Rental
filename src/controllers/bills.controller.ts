@@ -4,19 +4,21 @@ import { apiUrls } from "@/lib/api-urls";
 import type { ApiBill, Bill, PreparedBill, ApiResponse } from "@/lib/types";
 
 function mapBill(b: ApiBill): Bill {
+  const tenantId = typeof b.tenant === "object" ? b.tenant._id : b.tenant;
+  const homeId = typeof b.home === "object" ? (b.home as unknown as { _id: string })._id : b.home;
   const charges = (b.charges ?? []).map((c) => ({
     label: c.label ?? "",
     amount: Number(c.amount) || 0,
   }));
   const previousBalance = Number(b.previousBalance) || 0;
   const chargesSum = charges.reduce((s, c) => s + c.amount, 0);
-  const totalDue = Number(b.totalDue) || Number(b.total) || chargesSum + previousBalance;
+  const totalDue = Number(b.totalDue) || Number(b.totalAmount) || Number(b.total) || chargesSum + previousBalance;
   const amountReceived = Number(b.amountReceived) || 0;
   const remainingBalance = Number(b.remainingBalance) ?? totalDue - amountReceived;
   return {
     id: b._id,
-    tenantId: b.tenantId,
-    homeId: b.homeId,
+    tenantId,
+    homeId,
     month: b.month,
     charges,
     previousBalance,

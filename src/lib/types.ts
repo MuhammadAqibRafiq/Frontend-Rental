@@ -47,11 +47,12 @@ export type Bill = {
 
 export type ApiBill = {
   _id: string;
-  tenantId: string;
-  homeId: string;
+  tenant: { _id: string; name: string; phone?: string } | string;
+  home: string;
   month: string;
   charges: BillCharge[];
   previousBalance?: number;
+  totalAmount?: number;
   totalDue?: number;
   total?: number;
   amountReceived?: number;

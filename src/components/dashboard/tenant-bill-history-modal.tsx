@@ -33,10 +33,10 @@ export function TenantBillHistoryModal({ tenantId, tenantName }: TenantBillHisto
     <>
       <button
         onClick={handleOpen}
-        className="flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium border border-border hover:bg-muted transition-colors"
+        className="flex h-7 w-7 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        title="Bill history"
       >
         <History className="h-3.5 w-3.5" />
-        History
       </button>
 
       <Dialog
