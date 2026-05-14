@@ -2,6 +2,7 @@ import { MapPin, AlertTriangle, Users } from "lucide-react";
 import { TenantList } from "./tenant-list";
 import { AddTenantModal } from "./add-tenant-modal";
 import { DeleteHomeButton } from "./delete-home-button";
+import { EditHomeModal } from "./edit-home-modal";
 import { calcTotal } from "@/lib/charges";
 import { homeColor } from "@/lib/utils";
 import type { Home, Tenant } from "@/lib/types";
@@ -19,19 +20,51 @@ export function HomeDetail({ home, tenants }: HomeDetailProps) {
 
   return (
     <div className="space-y-6">
-      {/* Hero card */}
+      {/* Hero card — mobile: gradient, desktop: white (original) */}
       <div
         className="relative isolate overflow-hidden rounded-2xl p-[16px]"
         style={{ border: "1px solid hsl(var(--border))", background: "white" }}
       >
+        {/* Mobile gradient overlay */}
+        <div
+          className="pointer-events-none absolute inset-0 md:hidden"
+          style={{ background: "white", border: `1px solid hsl(var(--border))`, borderTop: `3px solid ${color}` }}
+        />
+        <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/20 md:hidden" />
+        <div className="pointer-events-none absolute -bottom-6 -left-6 h-24 w-24 rounded-full bg-white/15 md:hidden" />
         {/* Decorative blob */}
         <div
           className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full"
           style={{ background: `radial-gradient(circle, ${color}20 0%, transparent 70%)` }}
         />
 
-        <div className="relative flex items-start justify-between gap-5 flex-wrap">
-          {/* Left: icon + name */}
+        {/* Mobile layout */}
+        <div className="relative md:hidden">
+          <div className="flex items-center justify-between">
+            <p className="text-[11px] font-bold uppercase tracking-[0.06em] text-muted-foreground">Overview</p>
+            <div className="flex items-center gap-1">
+              <EditHomeModal home={home} />
+              <DeleteHomeButton homeId={home.id} homeName={home.name} />
+            </div>
+          </div>
+          <div className="mt-2 grid grid-cols-2 gap-2">
+            <div className="rounded-[12px] border border-border bg-muted/40 px-3 py-2.5">
+              <p className="text-[9px] font-bold uppercase tracking-[0.06em] text-muted-foreground">Active Tenants</p>
+              <p className="mt-0.5 text-[18px] font-extrabold leading-none" style={{ color }}>
+                {activeTenants.length}<span className="text-xs font-semibold text-muted-foreground">/{tenants.length}</span>
+              </p>
+            </div>
+            <div className="rounded-[12px] border border-border bg-muted/40 px-3 py-2.5">
+              <p className="text-[9px] font-bold uppercase tracking-[0.06em] text-muted-foreground">Monthly Inflow</p>
+              <p className="mt-0.5 text-[18px] font-extrabold leading-none" style={{ color }}>
+                {monthlyTotal.toLocaleString()}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop layout — original, completely untouched */}
+        <div className="relative hidden md:flex md:items-start md:justify-between md:gap-5 md:flex-wrap">
           <div className="flex items-center gap-4">
             <div
               className="flex h-16 w-16 shrink-0 items-center justify-center rounded-[18px]"
@@ -47,63 +80,36 @@ export function HomeDetail({ home, tenants }: HomeDetailProps) {
               </svg>
             </div>
             <div>
-              <p
-                className="text-[11px] font-bold uppercase tracking-[0.06em]"
-                style={{ color }}
-              >
-                Property
-              </p>
+              <p className="text-[11px] font-bold uppercase tracking-[0.06em]" style={{ color }}>Property</p>
               <div className="flex items-center gap-2">
-                <h2 className="text-[26px] font-extrabold leading-tight tracking-tight">
-                  {home.name}
-                </h2>
+                <h2 className="text-[26px] font-extrabold leading-tight tracking-tight">{home.name}</h2>
                 <DeleteHomeButton homeId={home.id} homeName={home.name} />
               </div>
               {home.address && (
                 <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                  <MapPin className="h-3.5 w-3.5 shrink-0" />
-                  {home.address}
+                  <MapPin className="h-3.5 w-3.5 shrink-0" />{home.address}
                 </p>
               )}
             </div>
           </div>
-
-          {/* Right: stats + actions */}
           <div className="flex items-stretch gap-3 flex-wrap">
             <div
               className="flex flex-col justify-center rounded-[14px] px-5 py-3 text-right"
-              style={{
-                background: "hsl(var(--violet-50, 250 100% 97%))",
-                borderLeft: `3px solid ${color}`,
-                backgroundColor: "#f5f3ff",
-              }}
+              style={{ backgroundColor: "#f5f3ff", borderLeft: `3px solid ${color}` }}
             >
-              <p className="text-[11px] font-bold uppercase tracking-[0.04em] text-muted-foreground">
-                Active tenants
-              </p>
+              <p className="text-[11px] font-bold uppercase tracking-[0.04em] text-muted-foreground">Active tenants</p>
               <p className="mt-0.5 text-[22px] font-extrabold leading-none tracking-tight">
                 {activeTenants.length}
-                <span className="text-base font-semibold text-muted-foreground">
-                  /{tenants.length}
-                </span>
+                <span className="text-base font-semibold text-muted-foreground">/{tenants.length}</span>
               </p>
             </div>
-
             <div
               className="flex flex-col justify-center rounded-[14px] px-5 py-3 text-right text-white"
-              style={{
-                background: `linear-gradient(135deg, ${color} 0%, ${color}CC 100%)`,
-                boxShadow: `0 4px 12px ${color}40`,
-              }}
+              style={{ background: `linear-gradient(135deg, ${color} 0%, ${color}CC 100%)`, boxShadow: `0 4px 12px ${color}40` }}
             >
-              <p className="text-[11px] font-bold uppercase tracking-[0.04em] opacity-85">
-                Monthly inflow
-              </p>
-              <p className="mt-0.5 text-[22px] font-extrabold leading-none tracking-tight">
-                {monthlyTotal.toLocaleString()}
-              </p>
+              <p className="text-[11px] font-bold uppercase tracking-[0.04em] opacity-85">Monthly inflow</p>
+              <p className="mt-0.5 text-[22px] font-extrabold leading-none tracking-tight">{monthlyTotal.toLocaleString()}</p>
             </div>
-
           </div>
         </div>
       </div>

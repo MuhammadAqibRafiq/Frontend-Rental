@@ -20,7 +20,8 @@ export function AddHomeModal() {
     <>
       <Button size="sm" onClick={() => setOpen(true)}>
         <Plus className="h-4 w-4" />
-        Add Home
+        <span className="md:hidden">Home</span>
+        <span className="hidden md:inline">Add Home</span>
       </Button>
 
       <Dialog open={open} onClose={handleClose} title="Create a home 🏠" description="Add a new property to manage.">

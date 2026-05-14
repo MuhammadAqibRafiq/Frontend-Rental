@@ -10,7 +10,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <div className="absolute top-1/2 left-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-300/10 blur-3xl" />
       </div>
       <AppNav />
-      <main className="mx-auto w-full max-w-7xl flex-1 px-2 py-10">{children}</main>
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 pt-6 pb-10 md:px-2 md:py-10">{children}</main>
       <Toaster position="top-right" richColors />
     </>
   );

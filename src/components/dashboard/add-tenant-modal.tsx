@@ -58,7 +58,8 @@ export function AddTenantModal({ homeId }: AddTenantModalProps) {
     <>
       <Button size="sm" onClick={() => setOpen(true)}>
         <Plus className="h-4 w-4" />
-        Add Tenant
+        <span className="md:hidden">Tenant</span>
+        <span className="hidden md:inline">Add Tenant</span>
       </Button>
 
       <Dialog

@@ -3,6 +3,7 @@ import { getHomes, getHome, getHomeTenants } from "@/controllers/homes.controlle
 import { Sidebar } from "@/components/dashboard/sidebar";
 import { HomeDetail } from "@/components/dashboard/home-detail";
 import { AddHomeModal } from "@/components/dashboard/add-home-modal";
+import { MobilePropertyPicker } from "@/components/dashboard/mobile-property-picker";
 import { routes } from "@/lib/routes";
 
 interface DashboardPageProps {
@@ -50,16 +51,22 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-violet-600">Dashboard</p>
-          <h1 className="mt-1 text-[28px] font-extrabold leading-tight tracking-tight">Properties at a glance</h1>
-          <p className="mt-1.5 text-sm text-muted-foreground">
+          <h1 className="mt-1 text-[18px] font-extrabold leading-tight tracking-tight md:text-[28px]">
+            <span className="md:hidden">Your Properties</span>
+            <span className="hidden md:inline">Properties at a glance</span>
+          </h1>
+          <p className="mt-1.5 hidden text-sm text-muted-foreground md:block">
             Manage your rental homes, track tenants, and stay on top of monthly charges.
           </p>
         </div>
         <AddHomeModal />
       </div>
 
-      <div className="grid grid-cols-[340px_1fr] gap-6 items-start">
-        <div className="sticky top-[88px]">
+      {/* Mobile property switcher — hidden on desktop */}
+      <MobilePropertyPicker homes={homes} activeHomeId={activeId} />
+
+      <div className="grid grid-cols-1 gap-6 items-start md:grid-cols-[340px_1fr]">
+        <div className="hidden md:block md:sticky md:top-[88px]">
           <Sidebar homes={homes} activeHomeId={activeId} />
         </div>
         <HomeDetail home={home} tenants={tenants} />

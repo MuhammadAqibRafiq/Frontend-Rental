@@ -18,9 +18,9 @@ export function TenantList({ tenants, homeColor = "#7c3aed", homeId }: { tenants
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-[18px] font-bold tracking-tight">
+        <h3 className="text-[15px] font-bold tracking-tight md:text-[18px]">
           Tenants{" "}
-          <span className="ml-1.5 font-medium text-muted-foreground">· {tenants.length}</span>
+          <span className="ml-1 font-medium text-muted-foreground">· {tenants.length}</span>
         </h3>
         <div className="flex items-center gap-2">
           <AddTenantModal homeId={homeId} />
@@ -60,8 +60,8 @@ export function TenantList({ tenants, homeColor = "#7c3aed", homeId }: { tenants
 
 function TableView({ tenants, homeColor }: { tenants: Tenant[]; homeColor: string }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-white">
-      <table className="w-full text-sm">
+    <div className="overflow-x-auto rounded-2xl border border-border bg-white">
+      <table className="w-full min-w-[520px] text-sm">
         <thead>
           <tr className="border-b border-border bg-muted/40 text-left text-[11px] font-bold uppercase tracking-[0.06em] text-muted-foreground">
             <th className="px-5 py-3">Tenant</th>
