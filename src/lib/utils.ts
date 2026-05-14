@@ -1,6 +1,13 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import type { Bill, Tenant } from "./types";
+import { HOME_COLORS } from "./constants";
+
+export function homeColor(id: string): string {
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) hash = id.charCodeAt(i) + ((hash << 5) - hash);
+  return HOME_COLORS[Math.abs(hash) % HOME_COLORS.length];
+}
 
 export function tenantTotal(tenant: Tenant): number {
   return tenant.charges

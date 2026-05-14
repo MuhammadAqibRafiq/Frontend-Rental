@@ -45,9 +45,25 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
   ]);
 
   return (
-    <div className="flex h-[calc(100vh-4rem)] -mx-2 -my-10">
-      <Sidebar homes={homes} activeHomeId={activeId} />
-      <HomeDetail home={home} tenants={tenants} />
+    <div className="space-y-6">
+      {/* Page header */}
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-violet-600">Dashboard</p>
+          <h1 className="mt-1 text-[28px] font-extrabold leading-tight tracking-tight">Properties at a glance</h1>
+          <p className="mt-1.5 text-sm text-muted-foreground">
+            Manage your rental homes, track tenants, and stay on top of monthly charges.
+          </p>
+        </div>
+        <AddHomeModal />
+      </div>
+
+      <div className="grid grid-cols-[340px_1fr] gap-6 items-start">
+        <div className="sticky top-[88px]">
+          <Sidebar homes={homes} activeHomeId={activeId} />
+        </div>
+        <HomeDetail home={home} tenants={tenants} />
+      </div>
     </div>
   );
 }

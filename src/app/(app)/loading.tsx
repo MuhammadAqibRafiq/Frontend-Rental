@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-background">
+    <div className="flex h-[calc(100vh-72px)] items-center justify-center overflow-hidden">
       {/* Blurred colour orbs — Apple-style depth */}
       <div className="absolute -top-32 -left-32 h-126 w-126 rounded-full bg-primary/20 blur-3xl" />
       <div className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-primary/15 blur-3xl" />

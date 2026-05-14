@@ -1,8 +1,12 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import { Home as HomeIcon } from "lucide-react";
+import { Home as HomeIcon, MapPin, ChevronRight, Search } from "lucide-react";
 import { AddHomeModal } from "./add-home-modal";
+import { EditHomeModal } from "./edit-home-modal";
 import { routes } from "@/lib/routes";
-import { cn } from "@/lib/utils";
+import { homeColor } from "@/lib/utils";
 import type { Home } from "@/lib/types";
 
 interface SidebarProps {
@@ -11,56 +15,117 @@ interface SidebarProps {
 }
 
 export function Sidebar({ homes, activeHomeId }: SidebarProps) {
+  const [query, setQuery] = useState("");
+
+  const filtered = homes.filter(
+    (h) =>
+      h.name.toLowerCase().includes(query.toLowerCase()) ||
+      (h.address ?? "").toLowerCase().includes(query.toLowerCase()),
+  );
+
   return (
-    <aside className="flex h-full w-64 shrink-0 flex-col border-r border-border bg-muted/40">
-      <div className="flex items-center justify-between px-4 py-4 border-b border-border">
-        <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-          My Homes
-        </span>
-        <AddHomeModal />
+    <aside className="flex flex-col rounded-2xl border border-border bg-white/60 overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-border px-5 py-4">
+        <div>
+          <p className="text-[10.5px] font-bold uppercase tracking-[0.06em] text-muted-foreground">
+            Your portfolio
+          </p>
+          <p className="mt-0.5 text-lg font-bold tracking-tight">
+            {homes.length} {homes.length === 1 ? "property" : "properties"}
+          </p>
+        </div>
+        {/* <AddHomeModal /> */}
       </div>
 
-      <nav className="flex-1 overflow-y-auto py-2">
-        {homes.length === 0 ? (
-          <p className="px-4 py-6 text-center text-xs text-muted-foreground">
-            No homes yet. Add one.
-          </p>
+      {/* Search */}
+      <div className="px-4 py-3">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+          <input
+            className="h-9 w-full rounded-xl border border-border bg-muted/40 pl-9 pr-3 text-[13px] placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-violet-400/40"
+            placeholder="Search properties…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </div>
+      </div>
+
+      {/* List */}
+      <nav className="flex-1 overflow-y-auto px-4 pb-4">
+        {filtered.length === 0 ? (
+          <div className="py-10 text-center">
+            <p className="text-sm font-medium text-muted-foreground">No matches</p>
+            <p className="mt-1 text-xs text-muted-foreground">Try a different search</p>
+          </div>
         ) : (
-          homes.map((home) => {
-            const isActive = home.id === activeHomeId;
-            return (
-              <Link
-                key={home.id}
-                href={`${routes.dashboard}?home=${home.id}`}
-                className={cn(
-                  "flex items-start gap-3 px-4 py-3 transition-colors hover:bg-accent",
-                  isActive && "bg-accent border-r-2 border-primary",
-                )}
-              >
-                <div
-                  className={cn(
-                    "mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md",
-                    isActive ? "bg-primary text-primary-foreground" : "bg-background text-muted-foreground",
-                  )}
+          <div className="flex flex-col gap-2.5">
+            {filtered.map((home) => {
+              const active = home.id === activeHomeId;
+              const color = homeColor(home.id);
+              return (
+                <Link
+                  key={home.id}
+                  href={`${routes.dashboard}?home=${home.id}`}
+                  className="group relative block overflow-hidden rounded-[18px] no-underline transition-all duration-150"
+                  style={{
+                    border: active ? `1.5px solid ${color}60` : "1px solid hsl(var(--border))",
+                    background: active
+                      ? "linear-gradient(135deg, rgba(245,243,255,1) 0%, rgba(237,233,254,0.6) 100%)"
+                      : "white",
+                    boxShadow: active ? `0 4px 16px ${color}1e` : "0 1px 3px rgba(0,0,0,0.06)",
+                  }}
                 >
-                  <HomeIcon className="h-4 w-4" />
-                </div>
-                <div className="min-w-0">
-                  <p
-                    className={cn(
-                      "truncate text-sm font-medium",
-                      isActive ? "text-foreground" : "text-muted-foreground",
-                    )}
-                  >
-                    {home.name}
-                  </p>
-                  {home.address && (
-                    <p className="truncate text-xs text-muted-foreground">{home.address}</p>
+                  {/* Active accent bar */}
+                  {active && (
+                    <span
+                      className="absolute left-0 top-0 bottom-0 w-[3px] rounded-l-[18px]"
+                      style={{ background: color }}
+                    />
                   )}
-                </div>
-              </Link>
-            );
-          })
+
+                  <div className="flex items-start gap-3.5 p-4">
+                    {/* Icon */}
+                    <div
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl"
+                      style={{
+                        background: `linear-gradient(135deg, ${color} 0%, ${color}AA 100%)`,
+                        boxShadow: active ? `0 4px 12px ${color}40` : "none",
+                      }}
+                    >
+                      <HomeIcon className="h-5 w-5 text-white" strokeWidth={2.2} />
+                    </div>
+
+                    {/* Text */}
+                    <div className="min-w-0 flex-1">
+                      <p
+                        className="truncate text-[15px] font-bold tracking-tight"
+                        style={{ color: active ? "#1a0f3c" : "hsl(var(--foreground))" }}
+                      >
+                        {home.name}
+                      </p>
+                      {home.address && (
+                        <p className="mt-0.5 flex items-center gap-1 truncate text-[12.5px] text-muted-foreground">
+                          <MapPin className="h-2.5 w-2.5 shrink-0" strokeWidth={2} />
+                          {home.address}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Edit + Chevron */}
+                    <div className="mt-2.5 flex items-center gap-1">
+                      <EditHomeModal home={home} />
+                      <ChevronRight
+                        className="h-4 w-4 shrink-0 transition-colors"
+                        style={{ color: active ? color : "hsl(var(--muted-foreground))" }}
+                        strokeWidth={2.2}
+                      />
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         )}
       </nav>
     </aside>

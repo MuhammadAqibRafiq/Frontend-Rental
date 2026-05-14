@@ -7,7 +7,7 @@ import { apiUrls } from "@/lib/api-urls";
 import { routes } from "@/lib/routes";
 
 export type HomeFormState =
-  | { errors?: { name?: string[]; address?: string[] }; message?: string }
+  | { errors?: { name?: string[]; address?: string[] }; message?: string; success?: boolean }
   | undefined;
 
 export async function createHomeAction(
@@ -46,6 +46,7 @@ export async function updateHomeAction(
       body: { name, address: address || undefined },
     });
     revalidatePath(routes.dashboard);
+    return { success: true };
   } catch (err) {
     return { message: err instanceof Error ? err.message : "Failed to update home." };
   }
