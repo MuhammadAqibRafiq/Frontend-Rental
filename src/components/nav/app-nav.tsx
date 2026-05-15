@@ -33,8 +33,8 @@ export function AppNav({ userName = "User" }: { userName?: string }) {
 
         {/* Logo */}
         <Link href={routes.home} className="flex items-center gap-2.5 no-underline">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] bg-gradient-to-br from-violet-600 to-violet-400 shadow-[0_4px_12px_rgba(124,58,237,0.3)]">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 to-violet-400 shadow-[0_4px_12px_rgba(124,58,237,0.35)]">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 11 12 4l9 7" />
               <path d="M5 10v10h14V10" />
               <path d="M10 20v-5h4v5" />
