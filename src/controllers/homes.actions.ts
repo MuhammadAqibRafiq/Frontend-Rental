@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { apiFetch } from "@/lib/api";
 import { apiUrls } from "@/lib/api-urls";
 import { routes } from "@/lib/routes";
@@ -26,6 +27,7 @@ export async function createHomeAction(
     });
     revalidatePath(routes.dashboard);
   } catch (err) {
+    if (isRedirectError(err)) throw err;
     return { message: err instanceof Error ? err.message : "Failed to create home." };
   }
 }
@@ -48,6 +50,7 @@ export async function updateHomeAction(
     revalidatePath(routes.dashboard);
     return { success: true };
   } catch (err) {
+    if (isRedirectError(err)) throw err;
     return { message: err instanceof Error ? err.message : "Failed to update home." };
   }
 }

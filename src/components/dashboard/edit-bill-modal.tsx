@@ -1,9 +1,8 @@
 "use client";
 
-import { useActionState, useState, useTransition, useEffect } from "react";
+import { useState } from "react";
 import { Pencil } from "lucide-react";
-import { updateBillAction } from "@/controllers/bills.actions";
-import { prepareBillAction } from "@/controllers/bills.actions";
+import { usePrepareBill, useUpdateBill, buildFormData } from "@/hooks/use-bills";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -20,46 +19,55 @@ export function EditBillModal({ bill, tenant }: EditBillModalProps) {
   const [charges, setCharges] = useState<BillCharge[]>(bill.charges);
   const [previousBalance, setPreviousBalance] = useState(bill.previousBalance);
   const [amountReceived, setAmountReceived] = useState(bill.amountReceived);
-  const [loadingPrepare, startPrepare] = useTransition();
+  const [formError, setFormError] = useState<string | null>(null);
 
-  const boundAction = updateBillAction.bind(null, bill.id);
-  const [state, action, pending] = useActionState(boundAction, undefined);
+  const { data: prepared, isLoading: loadingPrepare } = usePrepareBill(tenant.id, open);
+  const { mutateAsync: updateBill, isPending } = useUpdateBill(bill.id, tenant.homeId, bill.month);
 
-  useEffect(() => {
-    if (!pending && state === undefined && open) {
-      handleClose();
-    }
-  }, [pending]);
+  const [synced, setSynced] = useState(false);
+  if (open && prepared && !synced) {
+    setPreviousBalance(prepared.previousBalance ?? bill.previousBalance);
+    setSynced(true);
+  }
 
   function handleOpen() {
+    setSynced(false);
+    setCharges(bill.charges);
+    setPreviousBalance(bill.previousBalance);
+    setAmountReceived(bill.amountReceived);
+    setFormError(null);
     setOpen(true);
-    startPrepare(async () => {
-      const prepared = await prepareBillAction(tenant.id);
-      if (prepared) {
-        setCharges(bill.charges); // keep existing amounts, just refresh structure
-        setPreviousBalance(prepared.previousBalance ?? bill.previousBalance);
-      } else {
-        setCharges(bill.charges);
-        setPreviousBalance(bill.previousBalance);
-      }
-      setAmountReceived(bill.amountReceived);
-    });
   }
 
   function handleClose() {
     setOpen(false);
-    setCharges(bill.charges);
-    setPreviousBalance(bill.previousBalance);
-    setAmountReceived(bill.amountReceived);
+    setSynced(false);
   }
 
   function updateAmount(i: number, value: string) {
-    setCharges((prev) =>
-      prev.map((c, idx) => (idx === i ? { ...c, amount: Number(value) || 0 } : c)),
-    );
+    setCharges((prev) => prev.map((c, idx) => (idx === i ? { ...c, amount: Number(value) || 0 } : c)));
   }
 
-  const chargesSum = charges.reduce((sum, c) => sum + c.amount, 0);
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setFormError(null);
+
+    const fd = buildFormData(
+      { month: bill.month, previousBalance, amountReceived },
+      charges,
+    );
+
+    const result = await updateBill(fd);
+    if (result?.message) {
+      setFormError(result.message);
+    } else if (result?.errors) {
+      setFormError(Object.values(result.errors).flat().join(", "));
+    } else {
+      handleClose();
+    }
+  }
+
+  const chargesSum = charges.reduce((s, c) => s + c.amount, 0);
   const totalDue = chargesSum + previousBalance;
   const remainingBalance = totalDue - amountReceived;
 
@@ -80,9 +88,7 @@ export function EditBillModal({ bill, tenant }: EditBillModalProps) {
         description={`Editing bill for ${bill.month}`}
         className="max-w-md"
       >
-        <form action={action} className="space-y-4">
-          <input type="hidden" name="month" value={bill.month} />
-
+        <form onSubmit={handleSubmit} className="space-y-4">
           {loadingPrepare ? (
             <p className="text-sm text-muted-foreground">Loading charges…</p>
           ) : (
@@ -91,10 +97,8 @@ export function EditBillModal({ bill, tenant }: EditBillModalProps) {
               <div className="space-y-2 rounded-lg border border-border p-3">
                 {charges.map((charge, i) => (
                   <div key={i} className="flex items-center gap-2">
-                    <input type="hidden" name="chargeLabel" value={charge.label} />
                     <span className="flex-1 text-sm capitalize">{charge.label}</span>
                     <Input
-                      name="chargeAmount"
                       type="number"
                       min="0"
                       value={charge.amount}
@@ -112,7 +116,6 @@ export function EditBillModal({ bill, tenant }: EditBillModalProps) {
               <Label htmlFor="edit-prev-balance">Previous Balance</Label>
               <Input
                 id="edit-prev-balance"
-                name="previousBalance"
                 type="number"
                 value={previousBalance}
                 onChange={(e) => setPreviousBalance(Number(e.target.value) || 0)}
@@ -122,7 +125,6 @@ export function EditBillModal({ bill, tenant }: EditBillModalProps) {
               <Label htmlFor="edit-received">Amount Received</Label>
               <Input
                 id="edit-received"
-                name="amountReceived"
                 type="number"
                 min="0"
                 value={amountReceived === 0 ? "" : amountReceived}
@@ -133,17 +135,17 @@ export function EditBillModal({ bill, tenant }: EditBillModalProps) {
           </div>
 
           {charges.length > 0 && (
-            <div className="rounded-lg border border-border divide-y divide-border">
+            <div className="divide-y divide-border rounded-lg border border-border">
               <div className="flex items-center justify-between px-4 py-2.5">
                 <span className="text-sm text-muted-foreground">Charges Total</span>
                 <span className="text-sm font-medium">{chargesSum.toLocaleString()}</span>
               </div>
-              <div className="flex items-center justify-between px-4 py-2.5 bg-muted/50">
+              <div className="flex items-center justify-between bg-muted/50 px-4 py-2.5">
                 <span className="text-sm font-semibold">Total Due</span>
                 <span className="text-base font-bold">{totalDue.toLocaleString()}</span>
               </div>
               {amountReceived > 0 && (
-                <div className="flex items-center justify-between px-4 py-2.5 bg-orange-50">
+                <div className="flex items-center justify-between bg-orange-50 px-4 py-2.5">
                   <span className="text-sm font-semibold text-orange-600">Remaining</span>
                   <span className="text-base font-bold text-orange-600">{remainingBalance.toLocaleString()}</span>
                 </div>
@@ -151,12 +153,12 @@ export function EditBillModal({ bill, tenant }: EditBillModalProps) {
             </div>
           )}
 
-          {state?.message && <p className="text-sm text-destructive">{state.message}</p>}
+          {formError && <p className="text-sm text-destructive">{formError}</p>}
 
           <div className="flex justify-end gap-2 pt-1">
             <Button type="button" variant="outline" onClick={handleClose}>Cancel</Button>
-            <Button type="submit" disabled={pending || charges.length === 0 || loadingPrepare}>
-              {pending ? "Saving…" : "Save Changes"}
+            <Button type="submit" disabled={isPending || charges.length === 0 || loadingPrepare}>
+              {isPending ? "Saving…" : "Save Changes"}
             </Button>
           </div>
         </form>

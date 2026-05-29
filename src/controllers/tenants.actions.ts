@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { apiFetch } from "@/lib/api";
 import { apiUrls } from "@/lib/api-urls";
 import { routes } from "@/lib/routes";
@@ -48,6 +49,7 @@ export async function createTenantAction(
     });
     revalidatePath(routes.dashboard);
   } catch (err) {
+    if (isRedirectError(err)) throw err;
     return { message: err instanceof Error ? err.message : "Failed to create tenant." };
   }
 }
@@ -75,6 +77,7 @@ export async function updateTenantAction(
     revalidatePath(routes.dashboard);
     revalidatePath(routes.users);
   } catch (err) {
+    if (isRedirectError(err)) throw err;
     return { message: err instanceof Error ? err.message : "Failed to update tenant." };
   }
 }

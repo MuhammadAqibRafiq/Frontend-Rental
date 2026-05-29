@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ProgressBar } from "@/components/nav/progress-bar";
+import { QueryProvider } from "@/providers/query-provider";
 import { Suspense } from "react";
 import "./globals.css";
 
@@ -30,8 +31,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {children}
-        <Suspense fallback={null}><ProgressBar /></Suspense>
+        <QueryProvider>
+          {children}
+          <Suspense fallback={null}><ProgressBar /></Suspense>
+        </QueryProvider>
       </body>
     </html>
   );

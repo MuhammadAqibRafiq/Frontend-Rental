@@ -2,6 +2,7 @@ import { MessageCircle } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { getHomes, getHomeTenants } from "@/controllers/homes.controller";
 import { getBillsByTenant } from "@/controllers/bills.controller";
+import { fetchOr } from "@/lib/api";
 import { buildWhatsAppUrl } from "@/lib/utils";
 import { HomeFilterSelect } from "@/components/dashboard/home-filter-select";
 import { MonthFilterSelect } from "@/components/dashboard/month-filter-select";
@@ -19,13 +20,13 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
   const defaultMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
   const activeMonth = monthParam ?? defaultMonth;
 
-  const homes = await getHomes().catch(() => [] as Home[]);
+  const homes = await fetchOr(getHomes(), [] as Home[]);
   const filteredHomes = homeParam ? homes.filter((h) => h.id === homeParam) : homes;
 
   const allTenants: (Tenant & { homeName: string })[] = (
     await Promise.all(
       filteredHomes.map(async (home) => {
-        const tenants = await getHomeTenants(home.id).catch(() => [] as Tenant[]);
+        const tenants = await fetchOr(getHomeTenants(home.id), [] as Tenant[]);
         return tenants.map((t) => ({ ...t, homeName: home.name }));
       }),
     )
@@ -34,7 +35,7 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
   const billRows: BillRow[] = (
     await Promise.all(
       allTenants.map(async (tenant) => {
-        const bills = await getBillsByTenant(tenant.id).catch(() => [] as Bill[]);
+        const bills = await fetchOr(getBillsByTenant(tenant.id), [] as Bill[]);
         return bills.map((b) => ({
           ...b,
           tenantName: tenant.name,

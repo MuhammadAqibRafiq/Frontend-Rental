@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { Banknote } from "lucide-react";
-import { recordPaymentAction } from "@/controllers/bills.actions";
+import { useRecordPayment } from "@/hooks/use-bills";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -13,13 +13,16 @@ interface RecordPaymentModalProps {
   tenantName: string;
   totalDue: number;
   amountReceived: number;
+  homeId: string;
+  month: string;
 }
 
-export function RecordPaymentModal({ billId, tenantName, totalDue, amountReceived }: RecordPaymentModalProps) {
+export function RecordPaymentModal({ billId, tenantName, totalDue, amountReceived, homeId, month }: RecordPaymentModalProps) {
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState(String(totalDue - amountReceived));
   const [error, setError] = useState<string | null>(null);
-  const [isPending, startTransition] = useTransition();
+
+  const { mutateAsync: recordPayment, isPending } = useRecordPayment(homeId, month);
 
   function handleOpen() {
     setAmount(String(totalDue - amountReceived));
@@ -27,17 +30,13 @@ export function RecordPaymentModal({ billId, tenantName, totalDue, amountReceive
     setOpen(true);
   }
 
-  function handleClose() { setOpen(false); }
-
-  function handleSubmit() {
+  async function handleSubmit() {
     const value = Number(amount) || 0;
     if (value <= 0) { setError("Amount must be greater than 0."); return; }
     setError(null);
-    startTransition(async () => {
-      const err = await recordPaymentAction(billId, value);
-      if (err) setError(err);
-      else setOpen(false);
-    });
+    const err = await recordPayment({ billId, amount: value });
+    if (err) setError(err);
+    else setOpen(false);
   }
 
   const remaining = totalDue - amountReceived;
@@ -46,7 +45,7 @@ export function RecordPaymentModal({ billId, tenantName, totalDue, amountReceive
     <>
       <button
         onClick={handleOpen}
-        className="flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium bg-emerald-600 hover:bg-emerald-700 text-white transition-colors"
+        className="flex items-center gap-1.5 rounded-md bg-emerald-600 px-2.5 py-1.5 text-xs font-medium text-white transition-colors hover:bg-emerald-700"
       >
         <Banknote className="h-3.5 w-3.5" />
         Record Payment
@@ -54,14 +53,14 @@ export function RecordPaymentModal({ billId, tenantName, totalDue, amountReceive
 
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={() => setOpen(false)}
         title={`Payment — ${tenantName}`}
         description={`Total Due: ${totalDue.toLocaleString()} · Remaining: ${remaining.toLocaleString()}`}
         className="max-w-sm"
       >
         <div className="space-y-4">
           <div className="space-y-1.5">
-            <Label htmlFor="payment-amount">Amount Received ()</Label>
+            <Label htmlFor="payment-amount">Amount Received</Label>
             <Input
               id="payment-amount"
               type="number"
@@ -75,7 +74,7 @@ export function RecordPaymentModal({ billId, tenantName, totalDue, amountReceive
           {error && <p className="text-sm text-destructive">{error}</p>}
 
           <div className="flex justify-end gap-2 pt-1">
-            <Button type="button" variant="outline" onClick={handleClose}>Cancel</Button>
+            <Button type="button" variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
             <Button onClick={handleSubmit} disabled={isPending}>
               {isPending ? "Saving…" : "Save Payment"}
             </Button>

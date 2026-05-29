@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { Zap, CheckCheck } from "lucide-react";
-import { createBulkBillsAction, prepareBillAction } from "@/controllers/bills.actions";
+import { useQueries, useQueryClient } from "@tanstack/react-query";
+import { prepareBillAction, createBulkBillsAction, type BulkBillPayload } from "@/controllers/bills.actions";
+import { billKeys } from "@/lib/query-keys";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -39,26 +41,47 @@ export function GenerateAllBillsModal({ homeId, tenants, defaultMonth }: Generat
   const [month, setMonth] = useState(defaultMonth);
   const [entries, setEntries] = useState<TenantEntry[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [isPending, startTransition] = useTransition();
-  const [loadingPrepare, startPrepare] = useTransition();
+  const [isPending, setIsPending] = useState(false);
+  const queryClient = useQueryClient();
+
+  // Fetch all prepare data in parallel when modal is open
+  const prepareQueries = useQueries({
+    queries: tenants.map((t) => ({
+      queryKey: billKeys.prepare(t.id),
+      queryFn: () => prepareBillAction(t.id),
+      enabled: open,
+      staleTime: 0,
+    })),
+  });
+
+  const loadingPrepare = prepareQueries.some((q) => q.isLoading);
+
+  // Sync prepared data into entries once loaded
+  const [synced, setSynced] = useState(false);
+  if (open && !loadingPrepare && !synced && prepareQueries.length > 0) {
+    setEntries(
+      tenants.map((tenant, i) => ({
+        tenant,
+        variableAmounts: {},
+        previousBalance: prepareQueries[i]?.data?.previousBalance ?? 0,
+        amountReceived: 0,
+      })),
+    );
+    setSynced(true);
+  }
 
   function handleOpen() {
+    setSynced(false);
     setMonth(defaultMonth);
     setError(null);
     setEntries(tenants.map((t) => ({ tenant: t, variableAmounts: {}, previousBalance: 0, amountReceived: 0 })));
     setOpen(true);
-    startPrepare(async () => {
-      const prepared = await Promise.all(tenants.map((t) => prepareBillAction(t.id).catch(() => null)));
-      setEntries(tenants.map((tenant, i) => ({
-        tenant,
-        variableAmounts: {},
-        previousBalance: prepared[i]?.previousBalance ?? 0,
-        amountReceived: 0,
-      })));
-    });
   }
 
-  function handleClose() { setOpen(false); }
+  function handleClose() {
+    setOpen(false);
+    setSynced(false);
+  }
 
   function updateEntry(tenantId: string, field: "previousBalance" | "amountReceived", value: string) {
     setEntries((prev) =>
@@ -76,8 +99,7 @@ export function GenerateAllBillsModal({ homeId, tenants, defaultMonth }: Generat
     setEntries((prev) =>
       prev.map((e) => {
         if (e.tenant.id !== tenantId) return e;
-        const totalDue = getChargesSum(e) + e.previousBalance;
-        return { ...e, amountReceived: totalDue };
+        return { ...e, amountReceived: getChargesSum(e) + e.previousBalance };
       }),
     );
   }
@@ -86,30 +108,34 @@ export function GenerateAllBillsModal({ homeId, tenants, defaultMonth }: Generat
     setEntries((prev) =>
       prev.map((e) => {
         if (!isVariableFilled(e)) return e;
-        const totalDue = getChargesSum(e) + e.previousBalance;
-        return { ...e, amountReceived: totalDue };
+        return { ...e, amountReceived: getChargesSum(e) + e.previousBalance };
       }),
     );
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     setError(null);
-    startTransition(async () => {
-      const bills = entries.map(({ tenant, variableAmounts, previousBalance, amountReceived }) => ({
-        tenantId: tenant.id,
-        homeId,
-        month,
-        previousBalance,
-        amountReceived,
-        charges: tenant.charges.map((c, i) => ({
-          label: c.label,
-          amount: c.chargeType === "fixed" ? (c.amount ?? 0) : Number(variableAmounts[i]) || 0,
-        })),
-      }));
-      const err = await createBulkBillsAction(bills);
-      if (err) setError(err);
-      else setOpen(false);
-    });
+    setIsPending(true);
+    const bills: BulkBillPayload[] = entries.map(({ tenant, variableAmounts, previousBalance, amountReceived }) => ({
+      tenantId: tenant.id,
+      homeId,
+      month,
+      previousBalance,
+      amountReceived,
+      charges: tenant.charges.map((c, i) => ({
+        label: c.label,
+        amount: c.chargeType === "fixed" ? (c.amount ?? 0) : Number(variableAmounts[i]) || 0,
+      })),
+    }));
+    const err = await createBulkBillsAction(bills);
+    setIsPending(false);
+    if (err) {
+      setError(err);
+    } else {
+      queryClient.invalidateQueries({ queryKey: billKeys.byHome(homeId, month) });
+      queryClient.invalidateQueries({ queryKey: billKeys.all });
+      handleClose();
+    }
   }
 
   if (tenants.length === 0) return null;
@@ -138,15 +164,8 @@ export function GenerateAllBillsModal({ homeId, tenants, defaultMonth }: Generat
         <div className="space-y-4">
           {loadingPrepare && <p className="text-sm text-muted-foreground">Loading previous balances…</p>}
 
-          {/* Mark All Paid */}
           <div className="flex justify-end">
-            <Button
-              type="button"
-              size="sm"
-              variant="outline"
-              disabled={!allCanBePaid}
-              onClick={markAllPaid}
-            >
+            <Button type="button" size="sm" variant="outline" disabled={!allCanBePaid} onClick={markAllPaid}>
               <CheckCheck className="h-3.5 w-3.5" />
               Mark All Paid
             </Button>
@@ -160,27 +179,25 @@ export function GenerateAllBillsModal({ homeId, tenants, defaultMonth }: Generat
             const canMarkPaid = isVariableFilled({ tenant, variableAmounts, previousBalance, amountReceived });
 
             return (
-              <div key={tenant.id} className="rounded-xl border border-border overflow-hidden">
-                {/* Header */}
+              <div key={tenant.id} className="overflow-hidden rounded-xl border border-border">
                 <div className="flex items-center gap-3 border-b border-border bg-muted/40 px-4 py-2.5">
                   <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-semibold">
                     {initials}
                   </div>
-                  <p className="text-sm font-medium flex-1">
+                  <p className="flex-1 text-sm font-medium">
                     {tenant.name}
-                    {tenant.unit && <span className="ml-1 text-muted-foreground font-normal">({tenant.unit})</span>}
+                    {tenant.unit && <span className="ml-1 font-normal text-muted-foreground">({tenant.unit})</span>}
                   </p>
                   <button
                     type="button"
                     disabled={!canMarkPaid}
                     onClick={() => markAsPaid(tenant.id)}
-                    className="text-xs font-medium px-2.5 py-1 rounded-md bg-emerald-600 text-white hover:bg-emerald-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="rounded-md bg-emerald-600 px-2.5 py-1 text-xs font-medium text-white transition-colors hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-40"
                   >
                     Mark as Paid
                   </button>
                 </div>
 
-                {/* Charges */}
                 <div className="divide-y divide-border">
                   {tenant.charges.map((c, ci) => (
                     <div key={ci} className="flex items-center justify-between px-4 py-2.5">
@@ -194,17 +211,16 @@ export function GenerateAllBillsModal({ homeId, tenants, defaultMonth }: Generat
                           placeholder="Enter amount"
                           value={variableAmounts[ci] ?? ""}
                           onChange={(e) => setVariableAmount(globalIdx, ci, e.target.value)}
-                          className="h-8 w-36 text-sm text-right"
+                          className="h-8 w-36 text-right text-sm"
                         />
                       )}
                     </div>
                   ))}
                 </div>
 
-                {/* Previous Balance + Amount Received */}
                 <div className="grid grid-cols-2 divide-x divide-border border-t border-border">
-                  <div className="px-4 py-2.5 space-y-1">
-                    <p className="text-xs text-muted-foreground">Previous Balance ()</p>
+                  <div className="space-y-1 px-4 py-2.5">
+                    <p className="text-xs text-muted-foreground">Previous Balance</p>
                     <Input
                       type="number"
                       value={previousBalance}
@@ -212,8 +228,8 @@ export function GenerateAllBillsModal({ homeId, tenants, defaultMonth }: Generat
                       className="h-8 text-sm"
                     />
                   </div>
-                  <div className="px-4 py-2.5 space-y-1">
-                    <p className="text-xs text-muted-foreground">Amount Received ()</p>
+                  <div className="space-y-1 px-4 py-2.5">
+                    <p className="text-xs text-muted-foreground">Amount Received</p>
                     <Input
                       type="number"
                       min="0"
@@ -225,7 +241,6 @@ export function GenerateAllBillsModal({ homeId, tenants, defaultMonth }: Generat
                   </div>
                 </div>
 
-                {/* Summary */}
                 <div className="divide-y divide-border border-t border-border bg-muted/30">
                   <div className="flex items-center justify-between px-4 py-2">
                     <span className="text-xs text-muted-foreground">Total Due</span>
@@ -233,7 +248,7 @@ export function GenerateAllBillsModal({ homeId, tenants, defaultMonth }: Generat
                   </div>
                   {amountReceived > 0 && (
                     <div className="flex items-center justify-between px-4 py-2">
-                      <span className="text-xs text-orange-600 font-medium">Remaining</span>
+                      <span className="text-xs font-medium text-orange-600">Remaining</span>
                       <span className="text-sm font-bold text-orange-600">{remainingBalance.toLocaleString()}</span>
                     </div>
                   )}

@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getHomes, getHome, getHomeTenants } from "@/controllers/homes.controller";
+import { fetchOr } from "@/lib/api";
 import { Sidebar } from "@/components/dashboard/sidebar";
 import { HomeDetail } from "@/components/dashboard/home-detail";
 import { AddHomeModal } from "@/components/dashboard/add-home-modal";
@@ -13,7 +14,7 @@ interface DashboardPageProps {
 export default async function DashboardPage({ searchParams }: DashboardPageProps) {
   const { home: homeId } = await searchParams;
 
-  const rawHomes = await getHomes().catch(() => []);
+  const rawHomes = await fetchOr(getHomes(), []);
   const homes = Array.isArray(rawHomes) ? rawHomes : [];
 
   if (homes.length === 0) {

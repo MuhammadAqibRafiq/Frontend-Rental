@@ -140,6 +140,8 @@ export function BillCard({ tenant, bill, activeMonth, color }: BillCardProps) {
                     tenantName={tenant.name}
                     totalDue={bill.totalDue}
                     amountReceived={bill.amountReceived}
+                    homeId={tenant.homeId}
+                    month={activeMonth}
                   />
                 )}
                 {isPaid && (

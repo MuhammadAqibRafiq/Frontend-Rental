@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { apiFetch } from "@/lib/api";
 import { apiUrls } from "@/lib/api-urls";
 import { routes } from "@/lib/routes";
@@ -44,7 +45,8 @@ export async function getTenantBillsAction(tenantId: string): Promise<Bill[]> {
         createdAt: b.createdAt,
       };
     });
-  } catch {
+  } catch (err) {
+    if (isRedirectError(err)) throw err;
     return [];
   }
 }
@@ -55,7 +57,8 @@ export async function prepareBillAction(tenantId: string): Promise<PreparedBill 
       apiUrls.bills.prepare(tenantId),
     );
     return res.data;
-  } catch {
+  } catch (err) {
+    if (isRedirectError(err)) throw err;
     return null;
   }
 }
@@ -86,6 +89,7 @@ export async function createBillAction(
     });
     revalidatePath(routes.bills);
   } catch (err) {
+    if (isRedirectError(err)) throw err;
     return { message: err instanceof Error ? err.message : "Failed to create bill." };
   }
 }
@@ -99,6 +103,7 @@ export async function recordPaymentAction(billId: string, amountReceived: number
     revalidatePath(routes.bills);
     return null;
   } catch (err) {
+    if (isRedirectError(err)) throw err;
     return err instanceof Error ? err.message : "Failed to record payment.";
   }
 }
@@ -120,6 +125,7 @@ export async function createBulkBillsAction(bills: BulkBillPayload[]): Promise<s
     revalidatePath(routes.bills);
     return null;
   } catch (err) {
+    if (isRedirectError(err)) throw err;
     return err instanceof Error ? err.message : "Failed to generate bills.";
   }
 }
@@ -146,6 +152,7 @@ export async function updateBillAction(
     });
     revalidatePath(routes.bills);
   } catch (err) {
+    if (isRedirectError(err)) throw err;
     return { message: err instanceof Error ? err.message : "Failed to update bill." };
   }
 }

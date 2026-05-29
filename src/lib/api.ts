@@ -1,5 +1,6 @@
 import "server-only";
 import { redirect } from "next/navigation";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { routes } from "./routes";
 import { getSessionToken } from "./session";
 
@@ -58,6 +59,16 @@ export async function apiFetch<T>(path: string, options: ApiOptions = {}): Promi
   }
 
   return data as T;
+}
+
+/** Use instead of .catch(() => fallback) in server components to let 401 redirects propagate. */
+export async function fetchOr<T>(promise: Promise<T>, fallback: T): Promise<T> {
+  try {
+    return await promise;
+  } catch (err) {
+    if (isRedirectError(err)) throw err;
+    return fallback;
+  }
 }
 
 function extractMessage(data: unknown): string | null {

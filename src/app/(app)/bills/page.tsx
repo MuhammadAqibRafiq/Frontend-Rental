@@ -4,6 +4,7 @@ import { HomeSectionAccordion } from "@/components/dashboard/home-section-accord
 import { BillCard } from "@/components/dashboard/bill-card";
 import { getHomes, getHomeTenants } from "@/controllers/homes.controller";
 import { getBillsByHome } from "@/controllers/bills.controller";
+import { fetchOr } from "@/lib/api";
 import { MonthPicker } from "@/components/dashboard/month-picker";
 import type { Bill, Home, Tenant } from "@/lib/types";
 
@@ -18,7 +19,7 @@ function currentMonth(): string {
 
 export default async function BillsPage({ searchParams }: BillsPageProps) {
   const { month } = await searchParams;
-  const homes = await getHomes().catch(() => [] as Home[]);
+  const homes = await fetchOr(getHomes(), [] as Home[]);
 
   return (
     <div className="space-y-6">
@@ -47,8 +48,8 @@ async function OverviewTab({ homes, month }: { homes: Home[]; month?: string }) 
   const homeData = await Promise.all(
     homes.map(async (home) => {
       const [tenants, bills] = await Promise.all([
-        getHomeTenants(home.id).catch(() => [] as Tenant[]),
-        getBillsByHome(home.id, activeMonth).catch(() => [] as Bill[]),
+        fetchOr(getHomeTenants(home.id), [] as Tenant[]),
+        fetchOr(getBillsByHome(home.id, activeMonth), [] as Bill[]),
       ]);
       return { home, tenants, bills };
     }),
