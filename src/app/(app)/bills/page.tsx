@@ -167,7 +167,7 @@ function HomeSection({ home, tenants, bills, activeMonth }: {
       pendingCount={pendingCount}
       billsCount={bills.length}
     >
-      {tenants.map((tenant) => (
+      {tenants.filter((t) => t.active).map((tenant) => (
         <BillCard
           key={tenant.id}
           tenant={tenant}

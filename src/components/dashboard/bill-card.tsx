@@ -7,6 +7,7 @@ import { buildWhatsAppUrl } from "@/lib/utils";
 import { TenantBillHistoryModal } from "./tenant-bill-history-modal";
 import { RecordPaymentModal } from "./record-payment-modal";
 import { CreateBillModal } from "./create-bill-modal";
+import { EditBillModal } from "./edit-bill-modal";
 import type { Bill, Tenant } from "@/lib/types";
 
 interface BillCardProps {
@@ -132,6 +133,7 @@ export function BillCard({ tenant, bill, activeMonth, color }: BillCardProps) {
 
               {/* Actions */}
               <div className="flex gap-2">
+                <EditBillModal bill={bill} tenant={tenant} />
                 {bill.remainingBalance > 0 && (
                   <RecordPaymentModal
                     billId={bill.id}

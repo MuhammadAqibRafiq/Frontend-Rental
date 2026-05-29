@@ -132,6 +132,8 @@ export async function updateBillAction(
   const month = formData.get("month")?.toString() ?? "";
   const labels = formData.getAll("chargeLabel").map((v) => v.toString());
   const amounts = formData.getAll("chargeAmount").map((v) => Number(v) || 0);
+  const previousBalance = Number(formData.get("previousBalance")) || 0;
+  const amountReceived = Number(formData.get("amountReceived")) || 0;
 
   if (!month) return { errors: { month: ["Month is required."] } };
 
@@ -140,7 +142,7 @@ export async function updateBillAction(
   try {
     await apiFetch(apiUrls.bills.detail(id), {
       method: "PUT",
-      body: { month, charges },
+      body: { month, charges, previousBalance, amountReceived },
     });
     revalidatePath(routes.bills);
   } catch (err) {
