@@ -142,7 +142,7 @@ function useReveal(ref: React.RefObject<HTMLElement | null>) {
 
 /* ─── Counter ────────────────────────────────────────────────────────────── */
 
-function Counter({ to, suffix = "", duration = 1800, key: _key }: { to: number; suffix?: string; duration?: number; key?: number | string }) {
+function Counter({ to, suffix = "", duration = 1800 }: { to: number; suffix?: string; duration?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
   const [val, setVal] = useState(0);
   useEffect(() => {
