@@ -22,7 +22,7 @@ export function MobilePropertyPicker({ homes, activeHomeId }: MobilePropertyPick
       {/* Trigger — shows active property */}
       <button
         onClick={() => setOpen(true)}
-        className="flex w-full items-center gap-3 rounded-2xl border border-border bg-white px-4 py-3 text-left transition-colors hover:bg-muted/30 md:hidden"
+        className="flex w-full items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3 text-left transition-colors hover:bg-muted/30 md:hidden"
       >
         <div
           className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
@@ -47,7 +47,7 @@ export function MobilePropertyPicker({ homes, activeHomeId }: MobilePropertyPick
         <>
           <div className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm md:hidden" onClick={() => setOpen(false)} />
 
-          <div className="fixed bottom-0 left-0 right-0 z-50 rounded-t-2xl bg-white pb-8 shadow-2xl md:hidden">
+          <div className="fixed bottom-0 left-0 right-0 z-50 rounded-t-2xl bg-card pb-8 shadow-2xl md:hidden">
             {/* Handle */}
             <div className="mx-auto mt-3 h-1 w-10 rounded-full bg-muted" />
 

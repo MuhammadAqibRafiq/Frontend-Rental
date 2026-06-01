@@ -22,7 +22,7 @@ export function RegisterForm() {
       {/* TODO: Google OAuth — uncomment when functionality is ready
       <button
         type="button"
-        className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#ddd6fe] py-2.5 text-sm font-medium text-[#1a0f3c] hover:bg-[#f8f7ff] transition"
+        className="flex w-full items-center justify-center gap-2 rounded-lg border border-border py-2.5 text-sm font-medium text-foreground hover:bg-muted transition"
       >
         <GoogleIcon />
         Sign up with Google

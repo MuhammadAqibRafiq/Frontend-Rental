@@ -23,12 +23,12 @@ export function HomeDetail({ home, tenants }: HomeDetailProps) {
       {/* Hero card — mobile: gradient, desktop: white (original) */}
       <div
         className="relative isolate overflow-hidden rounded-2xl p-[16px]"
-        style={{ border: "1px solid hsl(var(--border))", background: "white" }}
+        style={{ border: "1px solid hsl(var(--border))", background: "var(--card)" }}
       >
         {/* Mobile gradient overlay */}
         <div
           className="pointer-events-none absolute inset-0 md:hidden"
-          style={{ background: "white", border: `1px solid hsl(var(--border))`, borderTop: `3px solid ${color}` }}
+          style={{ background: "var(--card)", border: `1px solid hsl(var(--border))`, borderTop: `3px solid ${color}` }}
         />
         <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/20 md:hidden" />
         <div className="pointer-events-none absolute -bottom-6 -left-6 h-24 w-24 rounded-full bg-white/15 md:hidden" />
@@ -95,7 +95,7 @@ export function HomeDetail({ home, tenants }: HomeDetailProps) {
           <div className="flex items-stretch gap-3 flex-wrap">
             <div
               className="flex flex-col justify-center rounded-[14px] px-5 py-3 text-right"
-              style={{ backgroundColor: "#f5f3ff", borderLeft: `3px solid ${color}` }}
+              style={{ backgroundColor: "var(--muted)", borderLeft: `3px solid ${color}` }}
             >
               <p className="text-[11px] font-bold uppercase tracking-[0.04em] text-muted-foreground">Active tenants</p>
               <p className="mt-0.5 text-[22px] font-extrabold leading-none tracking-tight">

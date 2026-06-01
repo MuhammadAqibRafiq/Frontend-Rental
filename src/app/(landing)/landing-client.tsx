@@ -97,7 +97,7 @@ function IcWhatsApp({ size = 22 }: { size?: number }) {
 
 function LogoMark({ size = 36 }: { size?: number }) {
   return (
-    <div style={{ width: size, height: size, borderRadius: size * 0.28, background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 6px 18px rgba(109,40,217,0.35)", flexShrink: 0 }}>
+    <div style={{ width: size, height: size, borderRadius: size * 0.28, background: "var(--primary-gradient)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 6px 18px rgba(109,40,217,0.35)", flexShrink: 0 }}>
       <svg width={size * 0.56} height={size * 0.56} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>
       </svg>
@@ -211,14 +211,14 @@ function MobileMenu({ open, onClose, onCTA, isAuthed }: { open: boolean; onClose
         padding: "0 12px 12px",
       }}>
         <div style={{
-          background: "white",
+          background: "var(--card)",
           borderRadius: 28,
           overflow: "hidden",
           boxShadow: "0 -4px 60px rgba(109,40,217,0.18), 0 0 0 1px rgba(124,58,237,0.08)",
         }}>
           {/* Drag handle */}
           <div style={{ display: "flex", justifyContent: "center", padding: "12px 0 4px" }}>
-            <div style={{ width: 36, height: 4, borderRadius: 999, background: "#e2e8f0" }} />
+            <div style={{ width: 36, height: 4, borderRadius: 999, background: "var(--border)" }} />
           </div>
 
           {/* Nav links */}
@@ -228,11 +228,11 @@ function MobileMenu({ open, onClose, onCTA, isAuthed }: { open: boolean; onClose
                 key={l.href}
                 href={l.href}
                 onClick={() => handleLink()}
-                style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", borderRadius: 14, fontSize: 15, fontWeight: 600, color: "#1b1733", textDecoration: "none", transition: "background 0.15s" }}
+                style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", borderRadius: 14, fontSize: 15, fontWeight: 600, color: "var(--foreground)", textDecoration: "none", transition: "background 0.15s" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#f5f3ff"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
               >
-                <span style={{ width: 36, height: 36, borderRadius: 10, background: "#f1f5f9", display: "flex", alignItems: "center", justifyContent: "center", color: "#6d28d9", flexShrink: 0 }}>
+                <span style={{ width: 36, height: 36, borderRadius: 10, background: "var(--muted)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--primary)", flexShrink: 0 }}>
                   {iconFor(l.icon, 17)}
                 </span>
                 {l.label}
@@ -250,7 +250,7 @@ function MobileMenu({ open, onClose, onCTA, isAuthed }: { open: boolean; onClose
                 <Link
                   href={routes.dashboard}
                   onClick={() => handleLink()}
-                  style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "15px", borderRadius: 16, textDecoration: "none", background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", boxShadow: "0 8px 24px -6px rgba(109,40,217,0.45)" }}
+                  style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "15px", borderRadius: 16, textDecoration: "none", background: "var(--primary-gradient)", color: "white", boxShadow: "0 8px 24px -6px var(--shadow-primary)" }}
                 >
                   Go to Dashboard <IcArrow size={16} sw={2.5} />
                 </Link>
@@ -269,13 +269,13 @@ function MobileMenu({ open, onClose, onCTA, isAuthed }: { open: boolean; onClose
                 <Link
                   href={routes.login}
                   onClick={() => handleLink()}
-                  style={{ display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontWeight: 700, color: "#1b1733", textDecoration: "none", padding: "15px", borderRadius: 16, border: "1.5px solid rgba(124,58,237,0.2)", background: "#faf9ff" }}
+                  style={{ display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontWeight: 700, color: "var(--foreground)", textDecoration: "none", padding: "15px", borderRadius: 16, border: "1.5px solid rgba(124,58,237,0.2)", background: "#faf9ff" }}
                 >
                   Sign in
                 </Link>
                 <button
                   onClick={() => handleLink(onCTA)}
-                  style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "15px", borderRadius: 16, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", boxShadow: "0 8px 24px -6px rgba(109,40,217,0.45)" }}
+                  style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "15px", borderRadius: 16, border: "none", cursor: "pointer", background: "var(--primary-gradient)", color: "white", boxShadow: "0 8px 24px -6px var(--shadow-primary)" }}
                 >
                   Get started — it&apos;s free <IcArrow size={16} sw={2.5} />
                 </button>
@@ -310,35 +310,35 @@ function NavBar({ onCTA, isAuthed }: { onCTA: () => void; isAuthed: boolean }) {
 
   return (
     <>
-      <header style={{ position: "sticky", top: 0, zIndex: 50, backdropFilter: "blur(20px) saturate(180%)", WebkitBackdropFilter: "blur(20px) saturate(180%)", background: "rgba(255,255,255,0.88)", borderBottom: "1px solid rgba(124,58,237,0.08)", boxShadow: scrolled ? "0 1px 0 rgba(15,23,42,0.04)" : "none" }}>
+      <header style={{ position: "sticky", top: 0, zIndex: 50, backdropFilter: "blur(20px) saturate(180%)", WebkitBackdropFilter: "blur(20px) saturate(180%)", background: "color-mix(in srgb, var(--background) 88%, transparent)", borderBottom: "1px solid var(--border)", boxShadow: scrolled ? "0 1px 0 rgba(15,23,42,0.04)" : "none" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <a href="#top" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
             <LogoMark size={36} />
             <div>
-              <div style={{ fontWeight: 800, fontSize: 17, letterSpacing: "-0.02em", lineHeight: 1, color: "#1b1733" }}>RentalApp</div>
-              <div style={{ fontSize: 10.5, fontWeight: 700, color: "#6d28d9", marginTop: 3, letterSpacing: "0.08em", textTransform: "uppercase" }}>Landlord Dashboard</div>
+              <div style={{ fontWeight: 800, fontSize: 17, letterSpacing: "-0.02em", lineHeight: 1, color: "var(--foreground)" }}>RentalApp</div>
+              <div style={{ fontSize: 10.5, fontWeight: 700, color: "var(--primary)", marginTop: 3, letterSpacing: "0.08em", textTransform: "uppercase" }}>Landlord Dashboard</div>
             </div>
           </a>
 
           {/* Desktop nav */}
           <nav className="landing-nav-links" style={{ display: "flex", alignItems: "center", gap: 4 }}>
             {NAV_LINKS.map(l => (
-              <a key={l.href} href={l.href} style={{ padding: "10px 14px", borderRadius: 10, fontSize: 14, fontWeight: 600, color: "#334155", textDecoration: "none", transition: "color 0.15s, background 0.15s" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#6d28d9"; (e.currentTarget as HTMLElement).style.background = "#ede9fe"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "#334155"; (e.currentTarget as HTMLElement).style.background = "transparent"; }}>{l.label}</a>
+              <a key={l.href} href={l.href} style={{ padding: "10px 14px", borderRadius: 10, fontSize: 14, fontWeight: 600, color: "var(--foreground)", textDecoration: "none", transition: "color 0.15s, background 0.15s" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "var(--primary)"; (e.currentTarget as HTMLElement).style.background = "var(--accent)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "var(--foreground)"; (e.currentTarget as HTMLElement).style.background = "transparent"; }}>{l.label}</a>
             ))}
           </nav>
 
           {/* Desktop CTA */}
           <div className="landing-nav-cta" style={{ display: "flex", alignItems: "center", gap: 10 }}>
             {isAuthed ? (
-              <Link href={routes.dashboard} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 13, padding: "10px 16px", borderRadius: 12, textDecoration: "none", background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", boxShadow: "0 14px 32px -8px rgba(109,40,217,0.45)" }}>
+              <Link href={routes.dashboard} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 13, padding: "10px 16px", borderRadius: 12, textDecoration: "none", background: "var(--primary-gradient)", color: "white", boxShadow: "0 14px 32px -8px var(--shadow-primary)" }}>
                 Go to Dashboard <IcArrow size={14} sw={2.5} />
               </Link>
             ) : (
               <>
-                <Link href={routes.login} className="landing-signin" style={{ fontSize: 14, fontWeight: 700, color: "#0a1628", textDecoration: "none", padding: "10px 6px" }}>Sign in</Link>
-                <button onClick={onCTA} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 13, padding: "10px 16px", borderRadius: 12, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", boxShadow: "0 14px 32px -8px rgba(109,40,217,0.45)" }}>
+                <Link href={routes.login} className="landing-signin" style={{ fontSize: 14, fontWeight: 700, color: "var(--foreground)", textDecoration: "none", padding: "10px 6px" }}>Sign in</Link>
+                <button onClick={onCTA} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 13, padding: "10px 16px", borderRadius: 12, border: "none", cursor: "pointer", background: "var(--primary-gradient)", color: "white", boxShadow: "0 14px 32px -8px var(--shadow-primary)" }}>
                   Get started <IcArrow size={14} sw={2.5} />
                 </button>
               </>
@@ -350,11 +350,11 @@ function NavBar({ onCTA, isAuthed }: { onCTA: () => void; isAuthed: boolean }) {
             className="landing-burger"
             onClick={() => setMenuOpen(o => !o)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
-            style={{ display: "none", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5, width: 40, height: 40, borderRadius: 10, border: "1px solid rgba(124,58,237,0.15)", background: menuOpen ? "#ede9fe" : "transparent", cursor: "pointer", padding: 0, transition: "background 0.15s" }}
+            style={{ display: "none", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 5, width: 40, height: 40, borderRadius: 10, border: "1px solid rgba(124,58,237,0.15)", background: menuOpen ? "var(--accent)" : "transparent", cursor: "pointer", padding: 0, transition: "background 0.15s" }}
           >
-            <span style={{ display: "block", width: 18, height: 2, borderRadius: 2, background: "#1b1733", transition: "transform 0.25s, opacity 0.25s", transform: menuOpen ? "translateY(7px) rotate(45deg)" : "none" }} />
-            <span style={{ display: "block", width: 18, height: 2, borderRadius: 2, background: "#1b1733", transition: "opacity 0.2s", opacity: menuOpen ? 0 : 1 }} />
-            <span style={{ display: "block", width: 18, height: 2, borderRadius: 2, background: "#1b1733", transition: "transform 0.25s, opacity 0.25s", transform: menuOpen ? "translateY(-7px) rotate(-45deg)" : "none" }} />
+            <span style={{ display: "block", width: 18, height: 2, borderRadius: 2, background: "var(--foreground)", transition: "transform 0.25s, opacity 0.25s", transform: menuOpen ? "translateY(7px) rotate(45deg)" : "none" }} />
+            <span style={{ display: "block", width: 18, height: 2, borderRadius: 2, background: "var(--foreground)", transition: "opacity 0.2s", opacity: menuOpen ? 0 : 1 }} />
+            <span style={{ display: "block", width: 18, height: 2, borderRadius: 2, background: "var(--foreground)", transition: "transform 0.25s, opacity 0.25s", transform: menuOpen ? "translateY(-7px) rotate(-45deg)" : "none" }} />
           </button>
         </div>
       </header>
@@ -369,35 +369,35 @@ function NavBar({ onCTA, isAuthed }: { onCTA: () => void; isAuthed: boolean }) {
 function SectionHeader({ eyebrow, title, subtitle }: { eyebrow: string; title: React.ReactNode; subtitle: string }) {
   return (
     <div className="reveal" style={{ textAlign: "center", maxWidth: 720, margin: "0 auto 56px", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-      <span style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px 6px 8px", borderRadius: 999, background: "#ede9fe", color: "#6d28d9", fontSize: 12, fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", border: "1px solid #ddd6fe" }}>
+      <span style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px 6px 8px", borderRadius: 999, background: "var(--accent)", color: "var(--primary)", fontSize: 12, fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", border: "1px solid var(--border)" }}>
         <span style={{ width: 6, height: 6, borderRadius: 999, background: "currentColor", boxShadow: "0 0 0 3px rgba(124,58,237,0.15)" }} /> {eyebrow}
       </span>
       <h2 style={{ margin: 0, letterSpacing: "-0.025em", fontWeight: 800, lineHeight: 1.1, fontSize: "clamp(32px,3.8vw,48px)" }}>{title}</h2>
-      <p style={{ margin: 0, color: "#5b5470", fontSize: "clamp(17px,1.4vw,19px)", lineHeight: 1.55, maxWidth: 620 }}>{subtitle}</p>
+      <p style={{ margin: 0, color: "var(--muted-foreground)", fontSize: "clamp(17px,1.4vw,19px)", lineHeight: 1.55, maxWidth: 620 }}>{subtitle}</p>
     </div>
   );
 }
 
 /* ─── Floating bill ──────────────────────────────────────────────────────── */
 
-function FloatingBill({ style, accent = "#6d28d9", scale = 1, className = "" }: { style?: React.CSSProperties; accent?: string; scale?: number; className?: string }) {
+function FloatingBill({ style, accent = "var(--primary)", scale = 1, className = "" }: { style?: React.CSSProperties; accent?: string; scale?: number; className?: string }) {
   return (
-    <div className={className} style={{ position: "absolute", width: 220 * scale, height: 280 * scale, background: "white", borderRadius: 18, boxShadow: "0 24px 60px -12px rgba(15,23,42,0.28),0 6px 16px rgba(15,23,42,0.12)", padding: 18 * scale, fontFamily: "inherit", ...style }}>
+    <div className={className} style={{ position: "absolute", width: 220 * scale, height: 280 * scale, background: "var(--card)", borderRadius: 18, boxShadow: "0 24px 60px -12px rgba(15,23,42,0.28),0 6px 16px rgba(15,23,42,0.12)", padding: 18 * scale, fontFamily: "inherit", ...style }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 * scale }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 * scale }}>
           <div style={{ width: 22 * scale, height: 22 * scale, borderRadius: 6 * scale, background: accent, display: "flex", alignItems: "center", justifyContent: "center" }}>
             <svg width={12 * scale} height={12 * scale} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></svg>
           </div>
-          <div style={{ fontSize: 10 * scale, fontWeight: 800, color: "#0a1628" }}>RentalApp</div>
+          <div style={{ fontSize: 10 * scale, fontWeight: 800, color: "var(--foreground)" }}>RentalApp</div>
         </div>
-        <div style={{ fontSize: 8 * scale, fontWeight: 700, color: "#94a3b8", letterSpacing: "0.06em" }}>JUN &apos;26</div>
+        <div style={{ fontSize: 8 * scale, fontWeight: 700, color: "var(--muted-foreground)", letterSpacing: "0.06em" }}>JUN &apos;26</div>
       </div>
-      <div style={{ fontSize: 13 * scale, fontWeight: 800, color: "#0a1628", letterSpacing: "-0.02em" }}>Mike</div>
-      <div style={{ fontSize: 9 * scale, color: "#64748b", marginTop: 2 }}>A-38 · First Floor</div>
-      <div style={{ marginTop: 14 * scale, paddingTop: 10 * scale, borderTop: "1px dashed #e2e8f0" }}>
+      <div style={{ fontSize: 13 * scale, fontWeight: 800, color: "var(--foreground)", letterSpacing: "-0.02em" }}>Mike</div>
+      <div style={{ fontSize: 9 * scale, color: "var(--muted-foreground)", marginTop: 2 }}>A-38 · First Floor</div>
+      <div style={{ marginTop: 14 * scale, paddingTop: 10 * scale, borderTop: "1px dashed var(--border)" }}>
         {[{ label: "Rent", val: "18,000" }, { label: "Electricity", val: "1,240" }, { label: "Water", val: "200" }, { label: "Maintenance", val: "500" }].map((r, i) => (
-          <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: `${5 * scale}px 0`, fontSize: 10 * scale, color: "#475569", borderTop: i > 0 ? "1px dashed #f1f5f9" : "none" }}>
-            <span>{r.label}</span><span style={{ fontWeight: 700, color: "#0a1628" }}>{r.val}</span>
+          <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: `${5 * scale}px 0`, fontSize: 10 * scale, color: "var(--muted-foreground)", borderTop: i > 0 ? "1px dashed var(--border)" : "none" }}>
+            <span>{r.label}</span><span style={{ fontWeight: 700, color: "var(--foreground)" }}>{r.val}</span>
           </div>
         ))}
       </div>
@@ -415,7 +415,7 @@ function Hero({ onCTA }: { onCTA: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
   useReveal(ref);
   return (
-    <div ref={ref} id="top" style={{ background: "linear-gradient(180deg,#efeaff 0%,#f6f3ff 60%,#ffffff 100%)", paddingTop: 56, paddingBottom: 96, minHeight: "92vh", display: "flex", alignItems: "center", position: "relative", overflow: "hidden" }}>
+    <div ref={ref} id="top" style={{ background: "linear-gradient(180deg,var(--muted) 0%,var(--accent) 60%,var(--background) 100%)", paddingTop: 56, paddingBottom: 96, minHeight: "92vh", display: "flex", alignItems: "center", position: "relative", overflow: "hidden" }}>
       <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(124,58,237,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.06) 1px,transparent 1px)", backgroundSize: "48px 48px", maskImage: "radial-gradient(ellipse 80% 60% at 50% 40%,black 30%,transparent 80%)", WebkitMaskImage: "radial-gradient(ellipse 80% 60% at 50% 40%,black 30%,transparent 80%)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", top: -160, right: -120, width: 520, height: 520, borderRadius: "50%", background: "radial-gradient(circle,rgba(124,58,237,0.20) 0%,transparent 65%)", filter: "blur(40px)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", bottom: -200, left: -120, width: 480, height: 480, borderRadius: "50%", background: "radial-gradient(circle,rgba(167,139,250,0.22) 0%,transparent 65%)", filter: "blur(40px)", pointerEvents: "none" }} />
@@ -423,38 +423,38 @@ function Hero({ onCTA }: { onCTA: () => void }) {
         <div className="hero-grid" style={{ display: "grid", gridTemplateColumns: "1.05fr 1fr", gap: 64, alignItems: "center" }}>
           <div>
             <div className="reveal">
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px 6px 8px", borderRadius: 999, background: "#ede9fe", color: "#6d28d9", fontSize: 12, fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", border: "1px solid #ddd6fe" }}>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px 6px 8px", borderRadius: 999, background: "var(--accent)", color: "var(--primary)", fontSize: 12, fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", border: "1px solid var(--border)" }}>
                 <span style={{ width: 6, height: 6, borderRadius: 999, background: "currentColor", boxShadow: "0 0 0 3px rgba(124,58,237,0.15)" }} /> Free for landlords · No card required
               </span>
             </div>
-            <h1 className="reveal reveal-delay-1" style={{ margin: "22px 0 0", color: "#1b1733", fontWeight: 800, fontSize: "clamp(40px,5vw,64px)", letterSpacing: "-0.025em", lineHeight: 1.05 }}>
+            <h1 className="reveal reveal-delay-1" style={{ margin: "22px 0 0", color: "var(--foreground)", fontWeight: 800, fontSize: "clamp(40px,5vw,64px)", letterSpacing: "-0.025em", lineHeight: 1.05 }}>
               Stop writing bills by hand.{" "}
               <span style={{ position: "relative", whiteSpace: "nowrap", display: "inline-block" }}>
                 Go digital today
                 <svg viewBox="0 0 220 14" preserveAspectRatio="none" style={{ position: "absolute", left: "-4%", bottom: -8, width: "108%", height: 14, pointerEvents: "none" }}>
-                  <path d="M4 10 C 40 2, 80 12, 120 7 S 200 4, 216 9" stroke="#7c3aed" strokeWidth="6" strokeLinecap="round" fill="none" className="scribble-path" />
+                  <path d="M4 10 C 40 2, 80 12, 120 7 S 200 4, 216 9" stroke="var(--primary)" strokeWidth="6" strokeLinecap="round" fill="none" className="scribble-path" />
                 </svg>
               </span>
               .
             </h1>
-            <p className="reveal reveal-delay-2" style={{ marginTop: 24, maxWidth: 520, color: "#5b5470", fontSize: "clamp(17px,1.4vw,19px)", lineHeight: 1.55 }}>
+            <p className="reveal reveal-delay-2" style={{ marginTop: 24, maxWidth: 520, color: "var(--muted-foreground)", fontSize: "clamp(17px,1.4vw,19px)", lineHeight: 1.55 }}>
               No more billing books. No more manual math. Generate every tenant's bill in one click and share it on WhatsApp — in the time it took you to find the pen.
             </p>
             <div className="reveal reveal-delay-3" style={{ marginTop: 36, display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <button onClick={onCTA} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", boxShadow: "0 14px 32px -8px rgba(109,40,217,0.45)", animation: "pulse-violet 2.4s ease-out infinite" }}>
+              <button onClick={onCTA} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, border: "none", cursor: "pointer", background: "var(--primary-gradient)", color: "white", boxShadow: "0 14px 32px -8px var(--shadow-primary)", animation: "pulse-violet 2.4s ease-out infinite" }}>
                 Get started — it&apos;s free <IcArrow size={18} sw={2.5} />
               </button>
-              <a href="#how" style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, textDecoration: "none", background: "#ede9fe", color: "#6d28d9", border: "1px solid #ddd6fe" }}>
+              <a href="#how" style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, textDecoration: "none", background: "var(--accent)", color: "var(--primary)", border: "1px solid var(--border)" }}>
                 <IcPlay size={14} /> See how it works
               </a>
             </div>
-            <div className="reveal reveal-delay-4" style={{ marginTop: 44, padding: "18px 22px", borderRadius: 16, background: "white", border: "1px solid rgba(124,58,237,0.10)", boxShadow: "0 6px 22px -8px rgba(76,29,149,0.16),0 1px 2px rgba(76,29,149,0.05)", display: "inline-flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
-              <div style={{ width: 44, height: 44, borderRadius: 12, background: "#ede9fe", border: "1px solid #ddd6fe", display: "flex", alignItems: "center", justifyContent: "center", color: "#6d28d9" }}>
+            <div className="reveal reveal-delay-4" style={{ marginTop: 44, padding: "18px 22px", borderRadius: 16, background: "var(--card)", border: "1px solid rgba(124,58,237,0.10)", boxShadow: "0 6px 22px -8px rgba(76,29,149,0.16),0 1px 2px rgba(76,29,149,0.05)", display: "inline-flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
+              <div style={{ width: 44, height: 44, borderRadius: 12, background: "var(--accent)", border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--primary)" }}>
                 <IcBolt size={20} />
               </div>
               <div>
-                <div style={{ fontSize: 24, fontWeight: 800, letterSpacing: "-0.02em", color: "#1b1733" }}><Counter to={347} duration={2200} /> bills</div>
-                <div style={{ fontSize: 13, color: "#5b5470", marginTop: 2 }}>generated by landlords today — and counting</div>
+                <div style={{ fontSize: 24, fontWeight: 800, letterSpacing: "-0.02em", color: "var(--foreground)" }}><Counter to={347} duration={2200} /> bills</div>
+                <div style={{ fontSize: 13, color: "var(--muted-foreground)", marginTop: 2 }}>generated by landlords today — and counting</div>
               </div>
             </div>
           </div>
@@ -462,14 +462,14 @@ function Hero({ onCTA }: { onCTA: () => void }) {
             <div style={{ position: "absolute", width: 380, height: 380, borderRadius: "50%", background: "radial-gradient(circle,rgba(124,58,237,0.18) 0%,transparent 70%)", filter: "blur(20px)" }} />
             <FloatingBill accent="#14b8a6" scale={0.9} className="float-slow" style={{ top: 40, left: 0, opacity: 0.55, filter: "blur(0.5px)" }} />
             <FloatingBill accent="#0ea5e9" scale={1.0} className="float-med" style={{ top: 90, right: 0, opacity: 0.8 }} />
-            <FloatingBill accent="#6d28d9" scale={1.15} className="float-fast" style={{ top: 80, left: "26%", zIndex: 3 }} />
-            <div className="float-med" style={{ position: "absolute", bottom: 80, right: -10, background: "white", borderRadius: 14, padding: "12px 16px", boxShadow: "0 24px 60px -12px rgba(15,23,42,0.35)", display: "flex", alignItems: "center", gap: 12, zIndex: 4 }}>
+            <FloatingBill accent="var(--primary)" scale={1.15} className="float-fast" style={{ top: 80, left: "26%", zIndex: 3 }} />
+            <div className="float-med" style={{ position: "absolute", bottom: 80, right: -10, background: "var(--card)", borderRadius: 14, padding: "12px 16px", boxShadow: "0 24px 60px -12px rgba(15,23,42,0.35)", display: "flex", alignItems: "center", gap: 12, zIndex: 4 }}>
               <div style={{ width: 32, height: 32, borderRadius: 10, background: "#25D366", color: "white", display: "flex", alignItems: "center", justifyContent: "center" }}><IcWhatsApp size={18} /></div>
-              <div><div style={{ fontSize: 12, fontWeight: 800, color: "#0a1628", lineHeight: 1 }}>Sent on WhatsApp</div><div style={{ fontSize: 11, color: "#64748b", marginTop: 3, lineHeight: 1 }}>2 seconds ago</div></div>
+              <div><div style={{ fontSize: 12, fontWeight: 800, color: "var(--foreground)", lineHeight: 1 }}>Sent on WhatsApp</div><div style={{ fontSize: 11, color: "var(--muted-foreground)", marginTop: 3, lineHeight: 1 }}>2 seconds ago</div></div>
             </div>
-            <div className="float-slow" style={{ position: "absolute", top: 24, right: 60, background: "white", borderRadius: 999, padding: "8px 14px 8px 8px", boxShadow: "0 16px 40px -8px rgba(15,23,42,0.32)", display: "flex", alignItems: "center", gap: 8, zIndex: 4 }}>
+            <div className="float-slow" style={{ position: "absolute", top: 24, right: 60, background: "var(--card)", borderRadius: 999, padding: "8px 14px 8px 8px", boxShadow: "0 16px 40px -8px rgba(15,23,42,0.32)", display: "flex", alignItems: "center", gap: 8, zIndex: 4 }}>
               <div style={{ width: 22, height: 22, borderRadius: 999, background: "#10b981", color: "white", display: "flex", alignItems: "center", justifyContent: "center" }}><IcCheck size={13} sw={3.5} /></div>
-              <div style={{ fontSize: 12, fontWeight: 700, color: "#0a1628" }}>PDF saved</div>
+              <div style={{ fontSize: 12, fontWeight: 700, color: "var(--foreground)" }}>PDF saved</div>
             </div>
           </div>
         </div>
@@ -486,13 +486,13 @@ function TrustBar() {
   return (
     <div ref={ref} style={{ padding: "32px 0 16px", borderTop: "1px solid rgba(124,58,237,0.08)" }}>
       <div className="reveal" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", textAlign: "center" }}>
-        <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: "#64748b", marginBottom: 24 }}>Used by 500+ landlords across 14 cities</div>
+        <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted-foreground)", marginBottom: 24 }}>Used by 500+ landlords across 14 cities</div>
         <div style={{ overflow: "hidden", maskImage: "linear-gradient(90deg,transparent,black 8%,black 92%,transparent)", WebkitMaskImage: "linear-gradient(90deg,transparent,black 8%,black 92%,transparent)" }}>
           <div style={{ display: "flex", gap: 56, width: "max-content", animation: "marquee 32s linear infinite" }}>
             {[...TRUST_LOGOS, ...TRUST_LOGOS].map((name, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, fontWeight: 700, fontSize: 18, letterSpacing: "-0.02em", color: "#94a3b8", whiteSpace: "nowrap" }}>
-                <span style={{ width: 22, height: 22, borderRadius: 6, background: "#ede9fe", border: "1px solid #ddd6fe", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-                  <span style={{ fontSize: 11, fontWeight: 800, color: "#6d28d9" }}>{name[0]}</span>
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, fontWeight: 700, fontSize: 18, letterSpacing: "-0.02em", color: "var(--muted-foreground)", whiteSpace: "nowrap" }}>
+                <span style={{ width: 22, height: 22, borderRadius: 6, background: "var(--accent)", border: "1px solid var(--border)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+                  <span style={{ fontSize: 11, fontWeight: 800, color: "var(--primary)" }}>{name[0]}</span>
                 </span>
                 {name}
               </div>
@@ -510,18 +510,18 @@ function Problem() {
   const ref = useRef<HTMLElement>(null);
   useReveal(ref);
   return (
-    <section ref={ref} style={{ padding: "96px 0", background: "#f8fafc" }}>
+    <section ref={ref} style={{ padding: "96px 0", background: "var(--muted)" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <div className="problem-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
           <div className="reveal">
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px 6px 8px", borderRadius: 999, background: "#ede9fe", color: "#6d28d9", fontSize: 12, fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", border: "1px solid #ddd6fe" }}>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px 6px 8px", borderRadius: 999, background: "var(--accent)", color: "var(--primary)", fontSize: 12, fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", border: "1px solid var(--border)" }}>
               <span style={{ width: 6, height: 6, borderRadius: 999, background: "currentColor" }} /> The way you do it now
             </span>
             <h2 style={{ marginTop: 18, fontWeight: 800, fontSize: "clamp(32px,3.8vw,48px)", letterSpacing: "-0.025em", lineHeight: 1.1 }}>
               Paper billing books were invented in the 1800s.{" "}
-              <span style={{ color: "#6d28d9" }}>You don&apos;t have to live there.</span>
+              <span style={{ color: "var(--primary)" }}>You don&apos;t have to live there.</span>
             </h2>
-            <p style={{ marginTop: 18, maxWidth: 480, color: "#5b5470", fontSize: "clamp(17px,1.4vw,19px)", lineHeight: 1.55 }}>
+            <p style={{ marginTop: 18, maxWidth: 480, color: "var(--muted-foreground)", fontSize: "clamp(17px,1.4vw,19px)", lineHeight: 1.55 }}>
               If any of this sounds painfully familiar, you&apos;re not alone — every landlord on RentalApp started exactly where you are.
             </p>
           </div>
@@ -531,12 +531,12 @@ function Problem() {
         </div>
         <div className="problem-cards" style={{ marginTop: 72, display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
           {PROBLEMS.map((p, i) => (
-            <div key={i} className={`reveal reveal-delay-${i + 1}`} style={{ background: "white", border: "1px solid rgba(124,58,237,0.08)", borderRadius: 20, boxShadow: "0 6px 22px -8px rgba(76,29,149,0.16),0 1px 2px rgba(76,29,149,0.05)", padding: 28, display: "flex", flexDirection: "column", gap: 14 }}>
+            <div key={i} className={`reveal reveal-delay-${i + 1}`} style={{ background: "var(--card)", border: "1px solid rgba(124,58,237,0.08)", borderRadius: 20, boxShadow: "0 6px 22px -8px rgba(76,29,149,0.16),0 1px 2px rgba(76,29,149,0.05)", padding: 28, display: "flex", flexDirection: "column", gap: 14 }}>
               <div style={{ width: 48, height: 48, borderRadius: 14, background: `${p.accent}1A`, color: p.accent, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 {iconFor(p.icon, 22)}
               </div>
-              <h3 style={{ margin: 0, color: "#1b1733", fontSize: 18, fontWeight: 700, lineHeight: 1.25, letterSpacing: "-0.025em" }}>{p.title}</h3>
-              <p style={{ margin: 0, color: "#5b5470", fontSize: 14.5, lineHeight: 1.6 }}>{p.body}</p>
+              <h3 style={{ margin: 0, color: "var(--foreground)", fontSize: 18, fontWeight: 700, lineHeight: 1.25, letterSpacing: "-0.025em" }}>{p.title}</h3>
+              <p style={{ margin: 0, color: "var(--muted-foreground)", fontSize: 14.5, lineHeight: 1.6 }}>{p.body}</p>
             </div>
           ))}
         </div>
@@ -578,19 +578,19 @@ function PaperToDigital() {
         </div>
       </div>
       <div style={{ position: "absolute", inset: 0, transition: "opacity 0.6s ease,transform 0.8s cubic-bezier(0.16,1,0.3,1)", opacity: stage === 1 ? 1 : 0, transform: stage === 1 ? "rotate(2deg) scale(1)" : "rotate(8deg) scale(0.85) translateY(-30px)" }}>
-        <div style={{ width: "100%", height: "100%", background: "white", borderRadius: 14, boxShadow: "0 24px 50px -10px rgba(15,23,42,0.25)", padding: 18, border: "1px solid #e2e8f0" }}>
+        <div style={{ width: "100%", height: "100%", background: "var(--card)", borderRadius: 14, boxShadow: "0 24px 50px -10px rgba(15,23,42,0.25)", padding: 18, border: "1px solid var(--border)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
             <LogoMark size={26} />
-            <div style={{ fontSize: 13, fontWeight: 800, color: "#1b1733" }}>RentalApp</div>
+            <div style={{ fontSize: 13, fontWeight: 800, color: "var(--foreground)" }}>RentalApp</div>
             <div style={{ marginLeft: "auto", padding: "3px 9px", borderRadius: 999, background: "#ecfdf5", color: "#047857", fontSize: 10, fontWeight: 800 }}>PAID</div>
           </div>
-          <div style={{ fontSize: 16, fontWeight: 800, color: "#1b1733", letterSpacing: "-0.02em" }}>Bobzy</div>
-          <div style={{ fontSize: 11, color: "#64748b", marginTop: 2 }}>A-38 · First Floor · June 2026</div>
-          <div style={{ marginTop: 14, paddingTop: 10, borderTop: "1px dashed #e2e8f0" }}>
+          <div style={{ fontSize: 16, fontWeight: 800, color: "var(--foreground)", letterSpacing: "-0.02em" }}>Bobzy</div>
+          <div style={{ fontSize: 11, color: "var(--muted-foreground)", marginTop: 2 }}>A-38 · First Floor · June 2026</div>
+          <div style={{ marginTop: 14, paddingTop: 10, borderTop: "1px dashed var(--border)" }}>
             {[{ l: "Rent", v: "18,000" }, { l: "Electricity", v: "1,240" }, { l: "Water", v: "200" }, { l: "Maintenance", v: "500" }].map((r, i) => (
-              <div key={i} style={{ display: "flex", justifyContent: "space-between", fontSize: 11, padding: "4px 0", color: "#475569" }}><span>{r.l}</span><span style={{ fontWeight: 700, color: "#1b1733" }}>{r.v}</span></div>
+              <div key={i} style={{ display: "flex", justifyContent: "space-between", fontSize: 11, padding: "4px 0", color: "var(--muted-foreground)" }}><span>{r.l}</span><span style={{ fontWeight: 700, color: "var(--foreground)" }}>{r.v}</span></div>
             ))}
-            <div style={{ marginTop: 8, padding: "8px 12px", borderRadius: 10, background: "linear-gradient(135deg,#6d28d9,#7c3aed)", color: "white", display: "flex", justifyContent: "space-between" }}>
+            <div style={{ marginTop: 8, padding: "8px 12px", borderRadius: 10, background: "var(--primary-gradient)", color: "white", display: "flex", justifyContent: "space-between" }}>
               <span style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em" }}>Total</span>
               <span style={{ fontSize: 14, fontWeight: 800 }}>19,940</span>
             </div>
@@ -627,10 +627,10 @@ function HowItWorks() {
                   <div style={{ width: 88, height: 88, borderRadius: 26, background: s.grad, display: "flex", alignItems: "center", justifyContent: "center", color: "white", boxShadow: s.shadow }}>
                     {iconFor(icons[i], 36)}
                   </div>
-                  <div style={{ position: "absolute", top: -8, right: -8, width: 32, height: 32, borderRadius: 999, background: "white", color: "#1b1733", border: "2px solid #f1f5f9", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, letterSpacing: "0.02em", boxShadow: "0 4px 8px rgba(15,23,42,0.08)" }}>{s.n}</div>
+                  <div style={{ position: "absolute", top: -8, right: -8, width: 32, height: 32, borderRadius: 999, background: "var(--card)", color: "var(--foreground)", border: "2px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, letterSpacing: "0.02em", boxShadow: "0 4px 8px rgba(15,23,42,0.08)" }}>{s.n}</div>
                 </div>
-                <h3 style={{ margin: "0 0 10px", color: "#1b1733", fontSize: 22, fontWeight: 700, lineHeight: 1.25, letterSpacing: "-0.025em" }}>{s.title}</h3>
-                <p style={{ margin: 0, maxWidth: 280, fontSize: 15, color: "#5b5470", lineHeight: 1.6 }}>{s.body}</p>
+                <h3 style={{ margin: "0 0 10px", color: "var(--foreground)", fontSize: 22, fontWeight: 700, lineHeight: 1.25, letterSpacing: "-0.025em" }}>{s.title}</h3>
+                <p style={{ margin: 0, maxWidth: 280, fontSize: 15, color: "var(--muted-foreground)", lineHeight: 1.6 }}>{s.body}</p>
               </div>
             ))}
           </div>
@@ -646,20 +646,20 @@ function Features() {
   const ref = useRef<HTMLElement>(null);
   useReveal(ref);
   return (
-    <section ref={ref} id="features" style={{ padding: "96px 0", background: "#f8fafc" }}>
+    <section ref={ref} id="features" style={{ padding: "96px 0", background: "var(--muted)" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <SectionHeader eyebrow="What's inside" title="Everything you need, nothing you don't" subtitle="We deliberately kept it simple. RentalApp does the few things landlords actually use — really well." />
         <div className="feat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
           {FEATURES.map((f, i) => (
             <div key={f.title} className={`reveal reveal-delay-${(i % 3) + 1}`}
-              style={{ background: "white", border: "1px solid rgba(124,58,237,0.08)", borderRadius: 20, boxShadow: "0 6px 22px -8px rgba(76,29,149,0.16),0 1px 2px rgba(76,29,149,0.05)", padding: 28, display: "flex", flexDirection: "column", gap: 16, transition: "transform 0.2s,box-shadow 0.2s", cursor: "default" }}
+              style={{ background: "var(--card)", border: "1px solid rgba(124,58,237,0.08)", borderRadius: 20, boxShadow: "0 6px 22px -8px rgba(76,29,149,0.16),0 1px 2px rgba(76,29,149,0.05)", padding: 28, display: "flex", flexDirection: "column", gap: 16, transition: "transform 0.2s,box-shadow 0.2s", cursor: "default" }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 28px 64px -16px rgba(76,29,149,0.26),0 4px 12px rgba(76,29,149,0.08)"; }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 6px 22px -8px rgba(76,29,149,0.16),0 1px 2px rgba(76,29,149,0.05)"; }}>
               <div style={{ width: 48, height: 48, borderRadius: 14, background: `${f.color}18`, color: f.color, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 {iconFor(f.icon, 22)}
               </div>
-              <h3 style={{ margin: 0, color: "#1b1733", fontSize: 19, fontWeight: 700, lineHeight: 1.25, letterSpacing: "-0.025em" }}>{f.title}</h3>
-              <p style={{ margin: 0, color: "#5b5470", fontSize: 14.5, lineHeight: 1.6 }}>{f.body}</p>
+              <h3 style={{ margin: 0, color: "var(--foreground)", fontSize: 19, fontWeight: 700, lineHeight: 1.25, letterSpacing: "-0.025em" }}>{f.title}</h3>
+              <p style={{ margin: 0, color: "var(--muted-foreground)", fontSize: 14.5, lineHeight: 1.6 }}>{f.body}</p>
             </div>
           ))}
         </div>
@@ -692,7 +692,7 @@ function SampleBillDemo() {
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <SectionHeader eyebrow="Try it" title="See a bill come together" subtitle="No signup, no install — just pick a tenant, enter the meter reading, and watch the bill assemble itself." />
         <div className="demo-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, alignItems: "start" }}>
-          <div style={{ padding: 32, borderRadius: 20, background: "linear-gradient(160deg,#7c3aed 0%,#6d28d9 100%)", color: "white", boxShadow: "0 24px 60px -16px rgba(109,40,217,0.5)" }}>
+          <div style={{ padding: 32, borderRadius: 20, background: "var(--primary-gradient)", color: "white", boxShadow: "0 24px 60px -16px rgba(109,40,217,0.5)" }}>
             <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 20 }}>Step 1 — pick a tenant</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
               {DEMO_TENANTS.map(t => {
@@ -704,7 +704,7 @@ function SampleBillDemo() {
                       <div style={{ fontWeight: 700, fontSize: 14 }}>{t.name}</div>
                       <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 2 }}>{t.unit} · Rent {t.rent.toLocaleString()}</div>
                     </div>
-                    {active && <div style={{ width: 22, height: 22, borderRadius: 999, background: "white", color: "#6d28d9", display: "flex", alignItems: "center", justifyContent: "center" }}><IcCheck size={13} sw={3.5} /></div>}
+                    {active && <div style={{ width: 22, height: 22, borderRadius: 999, background: "var(--card)", color: "var(--primary)", display: "flex", alignItems: "center", justifyContent: "center" }}><IcCheck size={13} sw={3.5} /></div>}
                   </button>
                 );
               })}
@@ -716,23 +716,23 @@ function SampleBillDemo() {
             </div>
             <div style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", marginTop: 10 }}>At {tenant.rate}/unit · this is the only thing that changes month to month.</div>
             <div style={{ marginTop: 28 }}>
-              <button onClick={() => setSent(true)} disabled={sent} style={{ width: "100%", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, fontFamily: "inherit", fontWeight: 800, fontSize: 15, padding: "14px 22px", borderRadius: 12, border: "none", cursor: sent ? "default" : "pointer", background: "white", color: "#6d28d9" }}>
+              <button onClick={() => setSent(true)} disabled={sent} style={{ width: "100%", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, fontFamily: "inherit", fontWeight: 800, fontSize: 15, padding: "14px 22px", borderRadius: 12, border: "none", cursor: sent ? "default" : "pointer", background: "var(--card)", color: "var(--primary)" }}>
                 {sent ? <><IcCheck size={16} sw={3} /> Sent on WhatsApp</> : <><IcWhatsApp size={16} /> Send on WhatsApp</>}
               </button>
             </div>
           </div>
           <div style={{ position: "relative" }}>
-            <div style={{ background: "white", border: "1px solid #e2e8f0", borderRadius: 20, padding: 28, boxShadow: "0 6px 22px -8px rgba(76,29,149,0.16)", overflow: "hidden" }}>
+            <div style={{ background: "var(--card)", border: "1px solid var(--border)", borderRadius: 20, padding: 28, boxShadow: "0 6px 22px -8px rgba(76,29,149,0.16)", overflow: "hidden" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <LogoMark size={32} />
-                  <div><div style={{ fontWeight: 800, fontSize: 15, color: "#1b1733" }}>RentalApp</div><div style={{ fontSize: 11, fontWeight: 700, color: "#64748b", letterSpacing: "0.04em", textTransform: "uppercase" }}>Monthly bill</div></div>
+                  <div><div style={{ fontWeight: 800, fontSize: 15, color: "var(--foreground)" }}>RentalApp</div><div style={{ fontSize: 11, fontWeight: 700, color: "var(--muted-foreground)", letterSpacing: "0.04em", textTransform: "uppercase" }}>Monthly bill</div></div>
                 </div>
-                <div style={{ padding: "5px 11px", borderRadius: 999, background: "#ede9fe", color: "#6d28d9", fontSize: 11, fontWeight: 800, letterSpacing: "0.04em", textTransform: "uppercase" }}>June 2026</div>
+                <div style={{ padding: "5px 11px", borderRadius: 999, background: "var(--accent)", color: "var(--primary)", fontSize: 11, fontWeight: 800, letterSpacing: "0.04em", textTransform: "uppercase" }}>June 2026</div>
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 14, paddingBottom: 18, marginBottom: 18, borderBottom: "1px dashed #e2e8f0" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 14, paddingBottom: 18, marginBottom: 18, borderBottom: "1px dashed var(--border)" }}>
                 <div style={{ width: 48, height: 48, borderRadius: 14, background: tenant.gradient, color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 14, transition: "background 0.3s" }}>{tenant.name.split(" ").map(p => p[0]).join("")}</div>
-                <div><div style={{ fontWeight: 800, fontSize: 18, color: "#1b1733", letterSpacing: "-0.01em" }}>{tenant.name}</div><div style={{ fontSize: 13, color: "#64748b", marginTop: 2 }}>A-38 · {tenant.unit}</div></div>
+                <div><div style={{ fontWeight: 800, fontSize: 18, color: "var(--foreground)", letterSpacing: "-0.01em" }}>{tenant.name}</div><div style={{ fontSize: 13, color: "var(--muted-foreground)", marginTop: 2 }}>A-38 · {tenant.unit}</div></div>
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
                 {[
@@ -741,16 +741,16 @@ function SampleBillDemo() {
                   { l: "Water", v: 200, sub: null, highlight: false },
                   { l: "Maintenance", v: 500, sub: null, highlight: false },
                 ].map((row, i) => (
-                  <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 14px", borderRadius: 10, background: row.highlight ? "#ede9fe" : "transparent", border: row.highlight ? "1px dashed #c4b5fd" : "1px dashed transparent" }}>
+                  <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 14px", borderRadius: 10, background: row.highlight ? "var(--accent)" : "transparent", border: row.highlight ? "1px dashed #c4b5fd" : "1px dashed transparent" }}>
                     <div>
-                      <div style={{ fontSize: 14, fontWeight: 600, color: "#1b1733" }}>{row.l}</div>
-                      {row.sub && <div style={{ fontSize: 11, color: "#64748b", marginTop: 2, fontFamily: "monospace" }}>{row.sub}</div>}
+                      <div style={{ fontSize: 14, fontWeight: 600, color: "var(--foreground)" }}>{row.l}</div>
+                      {row.sub && <div style={{ fontSize: 11, color: "var(--muted-foreground)", marginTop: 2, fontFamily: "monospace" }}>{row.sub}</div>}
                     </div>
-                    <div style={{ fontSize: 15, fontWeight: 700, color: "#1b1733", fontVariantNumeric: "tabular-nums" }}>{row.v.toLocaleString("en-US")}</div>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: "var(--foreground)", fontVariantNumeric: "tabular-nums" }}>{row.v.toLocaleString("en-US")}</div>
                   </div>
                 ))}
               </div>
-              <div style={{ marginTop: 16, padding: "16px 18px", borderRadius: 14, background: "linear-gradient(135deg,#6d28d9,#7c3aed)", color: "white", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ marginTop: 16, padding: "16px 18px", borderRadius: 14, background: "var(--primary-gradient)", color: "white", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.7)" }}>Total due</span>
                 <span style={{ fontSize: 28, fontWeight: 800, letterSpacing: "-0.025em", fontVariantNumeric: "tabular-nums" }}>
                   <Counter to={total} duration={400} key={total} />
@@ -758,9 +758,9 @@ function SampleBillDemo() {
               </div>
             </div>
             {sent && (
-              <div style={{ position: "absolute", top: -16, right: -16, background: "white", borderRadius: 14, padding: "12px 16px", boxShadow: "0 24px 60px -8px rgba(16,185,129,0.45)", display: "flex", alignItems: "center", gap: 10, zIndex: 5, animation: "slideIn 0.3s ease-out" }}>
+              <div style={{ position: "absolute", top: -16, right: -16, background: "var(--card)", borderRadius: 14, padding: "12px 16px", boxShadow: "0 24px 60px -8px rgba(16,185,129,0.45)", display: "flex", alignItems: "center", gap: 10, zIndex: 5, animation: "slideIn 0.3s ease-out" }}>
                 <div style={{ width: 32, height: 32, borderRadius: 999, background: "#25D366", color: "white", display: "flex", alignItems: "center", justifyContent: "center" }}><IcWhatsApp size={18} /></div>
-                <div><div style={{ fontSize: 13, fontWeight: 800, color: "#1b1733", lineHeight: 1 }}>Bill sent to {tenant.name}</div><div style={{ fontSize: 11, color: "#64748b", marginTop: 3, lineHeight: 1 }}>Just now</div></div>
+                <div><div style={{ fontSize: 13, fontWeight: 800, color: "var(--foreground)", lineHeight: 1 }}>Bill sent to {tenant.name}</div><div style={{ fontSize: 11, color: "var(--muted-foreground)", marginTop: 3, lineHeight: 1 }}>Just now</div></div>
               </div>
             )}
           </div>
@@ -776,19 +776,19 @@ function StatsSection() {
   const ref = useRef<HTMLElement>(null);
   useReveal(ref);
   return (
-    <section ref={ref} style={{ padding: "96px 0", background: "linear-gradient(180deg,#efeaff 0%,#f6f3ff 60%,#ffffff 100%)", position: "relative", overflow: "hidden" }}>
+    <section ref={ref} style={{ padding: "96px 0", background: "linear-gradient(180deg,var(--muted) 0%,var(--accent) 60%,var(--background) 100%)", position: "relative", overflow: "hidden" }}>
       <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(124,58,237,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.06) 1px,transparent 1px)", backgroundSize: "48px 48px", maskImage: "radial-gradient(ellipse 80% 60% at 50% 40%,black 30%,transparent 80%)", WebkitMaskImage: "radial-gradient(ellipse 80% 60% at 50% 40%,black 30%,transparent 80%)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)", width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle,rgba(124,58,237,0.14) 0%,transparent 70%)", filter: "blur(40px)", pointerEvents: "none" }} />
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 2 }}>
-        <SectionHeader eyebrow="The numbers so far" title={<>Small but <span style={{ color: "#6d28d9" }}>growing fast</span></>} subtitle="We launched quietly with a handful of landlords. They told other landlords. Here's where we are today." />
+        <SectionHeader eyebrow="The numbers so far" title={<>Small but <span style={{ color: "var(--primary)" }}>growing fast</span></>} subtitle="We launched quietly with a handful of landlords. They told other landlords. Here's where we are today." />
         <div className="stats-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24 }}>
           {STATS.map((s, i) => (
-            <div key={s.label} className={`reveal reveal-delay-${i + 1}`} style={{ padding: "36px 28px", borderRadius: 24, background: "white", border: "1px solid rgba(124,58,237,0.10)", boxShadow: "0 6px 22px -8px rgba(76,29,149,0.16)", textAlign: "center" }}>
+            <div key={s.label} className={`reveal reveal-delay-${i + 1}`} style={{ padding: "36px 28px", borderRadius: 24, background: "var(--card)", border: "1px solid var(--border)", boxShadow: "0 6px 22px -8px rgba(76,29,149,0.16)", textAlign: "center" }}>
               <div style={{ fontSize: "clamp(48px,6vw,72px)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1, background: "linear-gradient(180deg,#7c3aed 0%,#4c1d95 130%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                 <Counter to={s.value} suffix={s.suffix} duration={2200} />
               </div>
-              <div style={{ marginTop: 14, fontSize: 17, fontWeight: 700, color: "#1b1733" }}>{s.label}</div>
-              <div style={{ marginTop: 4, fontSize: 14, color: "#5b5470" }}>{s.sub}</div>
+              <div style={{ marginTop: 14, fontSize: 17, fontWeight: 700, color: "var(--foreground)" }}>{s.label}</div>
+              <div style={{ marginTop: 4, fontSize: 14, color: "var(--muted-foreground)" }}>{s.sub}</div>
             </div>
           ))}
         </div>
@@ -803,17 +803,17 @@ function Testimonials() {
   const ref = useRef<HTMLElement>(null);
   useReveal(ref);
   return (
-    <section ref={ref} style={{ padding: "96px 0", background: "#f8fafc" }}>
+    <section ref={ref} style={{ padding: "96px 0", background: "var(--muted)" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <SectionHeader eyebrow="From landlords like you" title="What people are actually saying" subtitle="We don't pay for reviews. These are real landlords who emailed us with feedback — we just asked if we could quote them." />
         <div className="testi-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
           {TESTIMONIALS.map((t, i) => (
-            <div key={t.name} className={`reveal reveal-delay-${i + 1}`} style={{ background: "white", border: "1px solid rgba(124,58,237,0.08)", borderRadius: 20, boxShadow: "0 6px 22px -8px rgba(76,29,149,0.16)", padding: 28, display: "flex", flexDirection: "column", gap: 18 }}>
+            <div key={t.name} className={`reveal reveal-delay-${i + 1}`} style={{ background: "var(--card)", border: "1px solid rgba(124,58,237,0.08)", borderRadius: 20, boxShadow: "0 6px 22px -8px rgba(76,29,149,0.16)", padding: 28, display: "flex", flexDirection: "column", gap: 18 }}>
               <div style={{ display: "flex", gap: 4 }}>{[...Array(5)].map((_, j) => <IcStar key={j} size={16} />)}</div>
-              <blockquote style={{ margin: 0, fontSize: 16, lineHeight: 1.55, color: "#1b1733", fontWeight: 500 }}>&quot;{t.quote}&quot;</blockquote>
-              <div style={{ marginTop: "auto", paddingTop: 16, borderTop: "1px solid #e2e8f0", display: "flex", alignItems: "center", gap: 12 }}>
+              <blockquote style={{ margin: 0, fontSize: 16, lineHeight: 1.55, color: "var(--foreground)", fontWeight: 500 }}>&quot;{t.quote}&quot;</blockquote>
+              <div style={{ marginTop: "auto", paddingTop: 16, borderTop: "1px solid var(--border)", display: "flex", alignItems: "center", gap: 12 }}>
                 <div style={{ width: 40, height: 40, borderRadius: 12, background: t.gradient, display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 800, fontSize: 13 }}>{t.initials}</div>
-                <div><div style={{ fontWeight: 800, fontSize: 14, color: "#1b1733" }}>{t.name}</div><div style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>{t.role}</div></div>
+                <div><div style={{ fontWeight: 800, fontSize: 14, color: "var(--foreground)" }}>{t.name}</div><div style={{ fontSize: 12, color: "var(--muted-foreground)", marginTop: 2 }}>{t.role}</div></div>
               </div>
             </div>
           ))}
@@ -832,46 +832,46 @@ function Pricing() {
   return (
     <section ref={ref} id="pricing" style={{ padding: "96px 0" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-        <SectionHeader eyebrow="Pricing" title={<>Right now, it&apos;s all free —{" "}<span style={{ color: "#6d28d9" }}>and we mean it</span></>} subtitle="No card. No trial countdown. No 'free up to 3 bills then 999/mo'. Just the whole product, on us, while we're building it out." />
+        <SectionHeader eyebrow="Pricing" title={<>Right now, it&apos;s all free —{" "}<span style={{ color: "var(--primary)" }}>and we mean it</span></>} subtitle="No card. No trial countdown. No 'free up to 3 bills then 999/mo'. Just the whole product, on us, while we're building it out." />
         <div className="pricing-grid" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 24, maxWidth: 980, margin: "0 auto" }}>
-          <div className="reveal" style={{ padding: 36, borderRadius: 20, position: "relative", border: "2px solid #7c3aed", background: "linear-gradient(180deg,white 0%,#f5f3ff 100%)", boxShadow: "0 24px 60px -12px rgba(109,40,217,0.25)" }}>
-            <div style={{ position: "absolute", top: -14, left: 36, padding: "5px 14px", borderRadius: 999, background: "#6d28d9", color: "white", fontSize: 11, fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>The only plan you need today</div>
+          <div className="reveal" style={{ padding: 36, borderRadius: 20, position: "relative", border: "2px solid var(--primary)", background: "linear-gradient(180deg,var(--card) 0%,var(--accent) 100%)", boxShadow: "0 24px 60px -12px rgba(109,40,217,0.25)" }}>
+            <div style={{ position: "absolute", top: -14, left: 36, padding: "5px 14px", borderRadius: 999, background: "var(--primary)", color: "white", fontSize: 11, fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>The only plan you need today</div>
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
-              <div style={{ width: 48, height: 48, borderRadius: 14, background: "linear-gradient(135deg,#7c3aed,#6d28d9)", color: "white", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 16px -4px rgba(109,40,217,0.4)" }}><IcSparkle size={22} /></div>
-              <div><div style={{ fontSize: 13, fontWeight: 800, color: "#6d28d9", letterSpacing: "0.06em", textTransform: "uppercase" }}>Free</div><h3 style={{ margin: 0, fontSize: 24, color: "#1b1733", fontWeight: 700, letterSpacing: "-0.025em" }}>For every landlord, everywhere</h3></div>
+              <div style={{ width: 48, height: 48, borderRadius: 14, background: "var(--primary-gradient)", color: "white", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 16px -4px rgba(109,40,217,0.4)" }}><IcSparkle size={22} /></div>
+              <div><div style={{ fontSize: 13, fontWeight: 800, color: "var(--primary)", letterSpacing: "0.06em", textTransform: "uppercase" }}>Free</div><h3 style={{ margin: 0, fontSize: 24, color: "var(--foreground)", fontWeight: 700, letterSpacing: "-0.025em" }}>For every landlord, everywhere</h3></div>
             </div>
             <div style={{ marginTop: 22, display: "flex", alignItems: "baseline", gap: 8 }}>
-              <span style={{ fontSize: 60, fontWeight: 800, color: "#1b1733", letterSpacing: "-0.04em", lineHeight: 1 }}>0</span>
-              <span style={{ fontSize: 16, fontWeight: 600, color: "#64748b" }}>/ month, forever (for now)</span>
+              <span style={{ fontSize: 60, fontWeight: 800, color: "var(--foreground)", letterSpacing: "-0.04em", lineHeight: 1 }}>0</span>
+              <span style={{ fontSize: 16, fontWeight: 600, color: "var(--muted-foreground)" }}>/ month, forever (for now)</span>
             </div>
             <ul style={{ listStyle: "none", padding: 0, margin: "28px 0 0", display: "flex", flexDirection: "column", gap: 12 }}>
               {included.map(item => (
-                <li key={item} style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 15, color: "#1b1733", fontWeight: 500 }}>
+                <li key={item} style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 15, color: "var(--foreground)", fontWeight: 500 }}>
                   <span style={{ width: 22, height: 22, borderRadius: 999, background: "#10b981", color: "white", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><IcCheck size={13} sw={3.5} /></span>
                   {item}
                 </li>
               ))}
             </ul>
-            <Link href={routes.register} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", boxShadow: "0 14px 32px -8px rgba(109,40,217,0.45)", marginTop: 32, width: "100%", textDecoration: "none", boxSizing: "border-box" }}>
+            <Link href={routes.register} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, border: "none", cursor: "pointer", background: "var(--primary-gradient)", color: "white", boxShadow: "0 14px 32px -8px var(--shadow-primary)", marginTop: 32, width: "100%", textDecoration: "none", boxSizing: "border-box" }}>
               Get started — it&apos;s free <IcArrow size={18} sw={2.5} />
             </Link>
-            <div style={{ marginTop: 14, textAlign: "center", fontSize: 12.5, color: "#64748b" }}>No credit card · Cancel any time (there&apos;s nothing to cancel)</div>
+            <div style={{ marginTop: 14, textAlign: "center", fontSize: 12.5, color: "var(--muted-foreground)" }}>No credit card · Cancel any time (there&apos;s nothing to cancel)</div>
           </div>
-          <div className="reveal reveal-delay-1" style={{ padding: 32, borderRadius: 20, background: "#f8fafc", border: "1px dashed #cbd5e1", display: "flex", flexDirection: "column", gap: 16 }}>
-            <span style={{ display: "inline-flex", alignSelf: "flex-start", alignItems: "center", gap: 8, padding: "6px 12px 6px 8px", borderRadius: 999, background: "#ede9fe", color: "#6d28d9", fontSize: 12, fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", border: "1px solid #ddd6fe" }}>
+          <div className="reveal reveal-delay-1" style={{ padding: 32, borderRadius: 20, background: "var(--muted)", border: "1px dashed #cbd5e1", display: "flex", flexDirection: "column", gap: 16 }}>
+            <span style={{ display: "inline-flex", alignSelf: "flex-start", alignItems: "center", gap: 8, padding: "6px 12px 6px 8px", borderRadius: 999, background: "var(--accent)", color: "var(--primary)", fontSize: 12, fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", border: "1px solid var(--border)" }}>
               <span style={{ width: 6, height: 6, borderRadius: 999, background: "currentColor" }} /> Pro · coming later
             </span>
-            <h3 style={{ margin: 0, color: "#1b1733", fontSize: 22, fontWeight: 700, letterSpacing: "-0.025em" }}>When we add Pro, it&apos;ll be for landlords who want more.</h3>
-            <p style={{ margin: 0, fontSize: 14.5, color: "#5b5470", lineHeight: 1.6 }}>Things like custom branding on bills, accountant exports, automated reminders, and team members. <strong style={{ color: "#1b1733" }}>Existing users get a heads-up first</strong> — and the free plan isn&apos;t going anywhere.</p>
+            <h3 style={{ margin: 0, color: "var(--foreground)", fontSize: 22, fontWeight: 700, letterSpacing: "-0.025em" }}>When we add Pro, it&apos;ll be for landlords who want more.</h3>
+            <p style={{ margin: 0, fontSize: 14.5, color: "var(--muted-foreground)", lineHeight: 1.6 }}>Things like custom branding on bills, accountant exports, automated reminders, and team members. <strong style={{ color: "var(--foreground)" }}>Existing users get a heads-up first</strong> — and the free plan isn&apos;t going anywhere.</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 8 }}>
               {["Custom branding (your logo on every bill)","Accountant-friendly CSV exports","Automated overdue reminders","Team members & multi-owner access"].map(item => (
-                <div key={item} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13.5, color: "#334155" }}>
-                  <span style={{ width: 18, height: 18, borderRadius: 999, border: "1.5px dashed #94a3b8", flexShrink: 0 }} />
+                <div key={item} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13.5, color: "var(--foreground)" }}>
+                  <span style={{ width: 18, height: 18, borderRadius: 999, border: "1.5px dashed var(--border)", flexShrink: 0 }} />
                   {item}
                 </div>
               ))}
             </div>
-            <a href="#cta" style={{ marginTop: "auto", fontSize: 14, fontWeight: 700, color: "#6d28d9", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>
+            <a href="#cta" style={{ marginTop: "auto", fontSize: 14, fontWeight: 700, color: "var(--primary)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>
               Get the email when Pro launches <IcArrow size={14} sw={2.5} />
             </a>
           </div>
@@ -888,20 +888,20 @@ function Faq() {
   useReveal(ref);
   const [openIdx, setOpenIdx] = useState(0);
   return (
-    <section ref={ref} id="faq" style={{ padding: "96px 0", background: "#f8fafc" }}>
+    <section ref={ref} id="faq" style={{ padding: "96px 0", background: "var(--muted)" }}>
       <div style={{ maxWidth: 920, margin: "0 auto", padding: "0 24px" }}>
         <SectionHeader eyebrow="Questions you might have" title="The short answers" subtitle="Couldn't find what you're looking for? Email us at hello@rentalapp.co — we reply within a day." />
-        <div className="reveal" style={{ background: "white", border: "1px solid rgba(124,58,237,0.08)", borderRadius: 20, boxShadow: "0 6px 22px -8px rgba(76,29,149,0.16)", padding: 8 }}>
+        <div className="reveal" style={{ background: "var(--card)", border: "1px solid rgba(124,58,237,0.08)", borderRadius: 20, boxShadow: "0 6px 22px -8px rgba(76,29,149,0.16)", padding: 8 }}>
           {FAQS.map((f, i) => (
-            <div key={f.q} style={{ borderBottom: i < FAQS.length - 1 ? "1px solid #e2e8f0" : "none", background: openIdx === i ? "#f8fafc" : "transparent", borderRadius: openIdx === i ? 14 : 0, transition: "background 0.2s,border-radius 0.2s" }}>
+            <div key={f.q} style={{ borderBottom: i < FAQS.length - 1 ? "1px solid var(--border)" : "none", background: openIdx === i ? "var(--muted)" : "transparent", borderRadius: openIdx === i ? 14 : 0, transition: "background 0.2s,border-radius 0.2s" }}>
               <button onClick={() => setOpenIdx(openIdx === i ? -1 : i)} style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, padding: "22px 20px", background: "transparent", border: "none", textAlign: "left", cursor: "pointer", fontFamily: "inherit" }}>
-                <span style={{ fontSize: 17, fontWeight: 700, color: "#1b1733", letterSpacing: "-0.01em" }}>{f.q}</span>
-                <span style={{ width: 32, height: 32, borderRadius: 999, background: openIdx === i ? "#6d28d9" : "#f1f5f9", color: openIdx === i ? "white" : "#334155", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "transform 0.2s,background 0.2s,color 0.2s", transform: openIdx === i ? "rotate(180deg)" : "rotate(0deg)" }}>
+                <span style={{ fontSize: 17, fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.01em" }}>{f.q}</span>
+                <span style={{ width: 32, height: 32, borderRadius: 999, background: openIdx === i ? "var(--primary)" : "var(--muted)", color: openIdx === i ? "white" : "var(--muted-foreground)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "transform 0.2s,background 0.2s,color 0.2s", transform: openIdx === i ? "rotate(180deg)" : "rotate(0deg)" }}>
                   <IcChevron size={16} />
                 </span>
               </button>
               <div style={{ maxHeight: openIdx === i ? 200 : 0, overflow: "hidden", transition: "max-height 0.3s ease,padding 0.3s", padding: openIdx === i ? "0 20px 22px" : "0 20px" }}>
-                <p style={{ margin: 0, fontSize: 15, lineHeight: 1.65, color: "#475569", maxWidth: 720 }}>{f.a}</p>
+                <p style={{ margin: 0, fontSize: 15, lineHeight: 1.65, color: "var(--muted-foreground)", maxWidth: 720 }}>{f.a}</p>
               </div>
             </div>
           ))}
@@ -917,30 +917,30 @@ function FinalCta() {
   const ref = useRef<HTMLElement>(null);
   useReveal(ref);
   return (
-    <section ref={ref} id="cta" style={{ padding: "96px 0", background: "linear-gradient(180deg,#efeaff 0%,#f6f3ff 60%,#ffffff 100%)", position: "relative", overflow: "hidden" }}>
+    <section ref={ref} id="cta" style={{ padding: "96px 0", background: "linear-gradient(180deg,var(--muted) 0%,var(--accent) 60%,var(--background) 100%)", position: "relative", overflow: "hidden" }}>
       <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(124,58,237,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.06) 1px,transparent 1px)", backgroundSize: "48px 48px", maskImage: "radial-gradient(ellipse 80% 60% at 50% 40%,black 30%,transparent 80%)", WebkitMaskImage: "radial-gradient(ellipse 80% 60% at 50% 40%,black 30%,transparent 80%)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 700, height: 700, borderRadius: "50%", background: "radial-gradient(circle,rgba(124,58,237,0.18) 0%,transparent 65%)", filter: "blur(40px)", pointerEvents: "none" }} />
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 2, textAlign: "center" }}>
         <div className="reveal" style={{ marginBottom: 18, display: "flex", justifyContent: "center" }}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px 6px 8px", borderRadius: 999, background: "#ede9fe", color: "#6d28d9", fontSize: 12, fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", border: "1px solid #ddd6fe" }}>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px 6px 8px", borderRadius: 999, background: "var(--accent)", color: "var(--primary)", fontSize: 12, fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", border: "1px solid var(--border)" }}>
             <span style={{ width: 6, height: 6, borderRadius: 999, background: "currentColor" }} /> Join 500+ landlords
           </span>
         </div>
-        <h2 className="reveal reveal-delay-1" style={{ color: "#1b1733", maxWidth: 800, margin: "0 auto", fontWeight: 800, fontSize: "clamp(32px,3.8vw,48px)", letterSpacing: "-0.025em", lineHeight: 1.1 }}>
-          Stop writing bills by hand.{" "}<span style={{ color: "#6d28d9" }}>Start today — it&apos;s free.</span>
+        <h2 className="reveal reveal-delay-1" style={{ color: "var(--foreground)", maxWidth: 800, margin: "0 auto", fontWeight: 800, fontSize: "clamp(32px,3.8vw,48px)", letterSpacing: "-0.025em", lineHeight: 1.1 }}>
+          Stop writing bills by hand.{" "}<span style={{ color: "var(--primary)" }}>Start today — it&apos;s free.</span>
         </h2>
-        <p className="reveal reveal-delay-2" style={{ marginTop: 22, maxWidth: 580, marginLeft: "auto", marginRight: "auto", color: "#5b5470", fontSize: "clamp(17px,1.4vw,19px)", lineHeight: 1.55 }}>
+        <p className="reveal reveal-delay-2" style={{ marginTop: 22, maxWidth: 580, marginLeft: "auto", marginRight: "auto", color: "var(--muted-foreground)", fontSize: "clamp(17px,1.4vw,19px)", lineHeight: 1.55 }}>
           Five minutes from now you could be sending your next month&apos;s bills on WhatsApp instead of digging out the pen.
         </p>
         <div className="reveal reveal-delay-3" style={{ marginTop: 36, display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
-          <Link href={routes.register} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, textDecoration: "none", background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", boxShadow: "0 14px 32px -8px rgba(109,40,217,0.45)", animation: "pulse-violet 2.4s ease-out infinite" }}>
+          <Link href={routes.register} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, textDecoration: "none", background: "var(--primary-gradient)", color: "white", boxShadow: "0 14px 32px -8px var(--shadow-primary)", animation: "pulse-violet 2.4s ease-out infinite" }}>
             Create your free account <IcArrow size={18} sw={2.5} />
           </Link>
-          <a href="#demo" style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, textDecoration: "none", background: "white", color: "#0a1628", border: "1px solid #e2e8f0" }}>
+          <a href="#demo" style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, textDecoration: "none", background: "var(--card)", color: "var(--foreground)", border: "1px solid var(--border)" }}>
             Try the demo first
           </a>
         </div>
-        <div className="reveal reveal-delay-4" style={{ marginTop: 28, fontSize: 13, color: "#5b5470" }}>
+        <div className="reveal reveal-delay-4" style={{ marginTop: 28, fontSize: 13, color: "var(--muted-foreground)" }}>
           No card required · Setup takes under 10 minutes · Free forever for the first 100 bills/month
         </div>
       </div>

@@ -14,7 +14,7 @@ export default function RegisterPage() {
       </MobileAuthShell>
 
       {/* Desktop layout — original, unchanged */}
-      <div className="hidden min-h-screen bg-[#eeeaf8] items-center justify-center p-6 md:flex">
+      <div className="hidden min-h-screen bg-background items-center justify-center p-6 md:flex">
         <AuthShell
           eyebrow="Get started"
           title="Create your account"

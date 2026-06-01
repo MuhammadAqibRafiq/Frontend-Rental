@@ -75,7 +75,7 @@ export function EditBillModal({ bill, tenant }: EditBillModalProps) {
     <>
       <button
         onClick={handleOpen}
-        className="flex items-center gap-1.5 rounded-xl border border-border bg-white px-3 py-1.5 text-[12px] font-semibold text-muted-foreground transition-colors hover:text-foreground"
+        className="flex items-center gap-1.5 rounded-xl border border-border bg-card px-3 py-1.5 text-[12px] font-semibold text-muted-foreground transition-colors hover:text-foreground"
       >
         <Pencil className="h-3.5 w-3.5" />
         Edit Bill

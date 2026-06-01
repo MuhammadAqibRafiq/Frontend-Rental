@@ -113,9 +113,9 @@ async function OverviewTab({ homes, month }: { homes: Home[]; month?: string }) 
 // ─── Stat Card ────────────────────────────────────────────────────────────────
 
 const ACCENTS = {
-  violet:  { bg: "#ede9fe", fg: "#7c3aed", grad: "linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%)" },
-  orange:  { bg: "#ffedd5", fg: "#c2410c", grad: "linear-gradient(135deg, #f97316 0%, #fb923c 100%)" },
-  emerald: { bg: "#d1fae5", fg: "#065f46", grad: "linear-gradient(135deg, #10b981 0%, #34d399 100%)" },
+  violet:  { bg: "var(--accent)", fg: "var(--primary)", grad: "linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%)" },
+  orange:  { bg: "var(--accent)", fg: "#f97316",        grad: "linear-gradient(135deg, #f97316 0%, #fb923c 100%)" },
+  emerald: { bg: "var(--accent)", fg: "#10b981",        grad: "linear-gradient(135deg, #10b981 0%, #34d399 100%)" },
 };
 
 function StatCard({ icon: Icon, label, value, hint, accent = "violet", trend }: {
@@ -124,7 +124,7 @@ function StatCard({ icon: Icon, label, value, hint, accent = "violet", trend }: 
 }) {
   const a = ACCENTS[accent];
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-border bg-white px-5 py-4">
+    <div className="relative overflow-hidden rounded-2xl border border-border bg-card px-5 py-4">
       <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full opacity-40" style={{ background: a.bg }} />
       <div className="relative flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">

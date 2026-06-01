@@ -18,7 +18,7 @@ export function LoginForm() {
       <div className="flex gap-3">
         <button
           type="button"
-          className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-[#ddd6fe] py-2.5 text-sm font-medium text-[#1a0f3c] hover:bg-[#f8f7ff] transition"
+          className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-border py-2.5 text-sm font-medium text-foreground hover:bg-muted transition"
         >
           <GoogleIcon />
           Continue with Google
@@ -68,7 +68,7 @@ export function LoginForm() {
             type="checkbox"
             name="remember"
             defaultChecked
-            className="h-4 w-4 rounded border-[#ddd6fe] accent-[#7c3aed]"
+            className="h-4 w-4 rounded border-border accent-violet-600"
           />
           <span className="text-sm text-[#1a0f3c]">Keep me signed in on this device</span>
         </label>

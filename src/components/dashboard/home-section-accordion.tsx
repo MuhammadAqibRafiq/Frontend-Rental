@@ -25,7 +25,7 @@ export function HomeSectionAccordion({
   const color = homeColor(home.id);
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-white">
+    <div className="overflow-hidden rounded-2xl border border-border bg-card">
       {/* Header toggle */}
       <div
         role="button"
@@ -66,7 +66,7 @@ export function HomeSectionAccordion({
           <div
             className="flex h-8 w-8 items-center justify-center rounded-[10px] transition-transform duration-200"
             style={{
-              background: "#ede9fe",
+              background: "var(--accent)",
               transform: open ? "rotate(180deg)" : "rotate(0deg)",
             }}
           >

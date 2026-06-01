@@ -23,7 +23,7 @@ export function BillCard({ tenant, bill, activeMonth, color }: BillCardProps) {
   const isPaid = bill ? bill.remainingBalance <= 0 : false;
 
   return (
-    <div className={cn("overflow-hidden rounded-2xl border bg-white transition-shadow h-fit", open ? "border-violet-200 shadow-md" : "border-border shadow-sm")}>
+    <div className={cn("overflow-hidden rounded-2xl border bg-card transition-shadow h-fit", open ? "border-violet-200 shadow-md" : "border-border shadow-sm")}>
       {/* Collapsed row — always visible */}
       <div
         role="button"

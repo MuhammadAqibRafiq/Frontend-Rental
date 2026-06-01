@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ProgressBar } from "@/components/nav/progress-bar";
 import { QueryProvider } from "@/providers/query-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 import { Suspense } from "react";
 import "./globals.css";
 
@@ -29,12 +30,15 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <QueryProvider>
-          {children}
-          <Suspense fallback={null}><ProgressBar /></Suspense>
-        </QueryProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <QueryProvider>
+            {children}
+            <Suspense fallback={null}><ProgressBar /></Suspense>
+          </QueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

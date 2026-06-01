@@ -2,6 +2,7 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { routes } from "@/lib/routes";
 import { isAuthenticated } from "@/lib/session";
+import { ThemeToggle } from "@/components/nav/theme-toggle";
 
 export async function PublicNav() {
   const authed = await isAuthenticated();
@@ -23,6 +24,7 @@ export async function PublicNav() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           {authed ? (
             <Link href={routes.dashboard} className={buttonVariants({ size: "sm" })}>
               Dashboard

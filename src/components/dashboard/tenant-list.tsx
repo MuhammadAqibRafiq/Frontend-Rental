@@ -24,12 +24,12 @@ export function TenantList({ tenants, homeColor = "#7c3aed", homeId }: { tenants
         </h3>
         <div className="flex items-center gap-2">
           <AddTenantModal homeId={homeId} />
-          <div className="flex items-center gap-1 rounded-xl border border-border bg-white p-1">
+          <div className="flex items-center gap-1 rounded-xl border border-border bg-card p-1">
           <button
             onClick={() => setView("table")}
             className={cn(
               "flex h-7 w-7 items-center justify-center rounded-lg transition-colors",
-              view === "table" ? "bg-violet-600 text-white shadow-sm" : "text-muted-foreground hover:text-foreground",
+              view === "table" ? "bg-primary text-white shadow-sm" : "text-muted-foreground hover:text-foreground",
             )}
             title="Table view"
           >
@@ -39,7 +39,7 @@ export function TenantList({ tenants, homeColor = "#7c3aed", homeId }: { tenants
             onClick={() => setView("card")}
             className={cn(
               "flex h-7 w-7 items-center justify-center rounded-lg transition-colors",
-              view === "card" ? "bg-violet-600 text-white shadow-sm" : "text-muted-foreground hover:text-foreground",
+              view === "card" ? "bg-primary text-white shadow-sm" : "text-muted-foreground hover:text-foreground",
             )}
             title="Card view"
           >
@@ -60,7 +60,7 @@ export function TenantList({ tenants, homeColor = "#7c3aed", homeId }: { tenants
 
 function TableView({ tenants, homeColor }: { tenants: Tenant[]; homeColor: string }) {
   return (
-    <div className="overflow-x-auto rounded-2xl border border-border bg-white">
+    <div className="overflow-x-auto rounded-2xl border border-border bg-card">
       <table className="w-full min-w-[520px] text-sm">
         <thead>
           <tr className="border-b border-border bg-muted/40 text-left text-[11px] font-bold uppercase tracking-[0.06em] text-muted-foreground">
@@ -150,7 +150,7 @@ function TenantCard({ tenant, homeColor }: { tenant: Tenant; homeColor: string }
   return (
     <div
       className={cn(
-        "flex items-center gap-4 rounded-2xl border border-border bg-white px-4 py-3 transition-shadow hover:shadow-sm",
+        "flex items-center gap-4 rounded-2xl border border-border bg-card px-4 py-3 transition-shadow hover:shadow-sm",
         !tenant.active && "opacity-60",
       )}
     >

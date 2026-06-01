@@ -24,7 +24,7 @@ export function Sidebar({ homes, activeHomeId }: SidebarProps) {
   );
 
   return (
-    <aside className="flex flex-col rounded-2xl border border-border bg-white/60 overflow-hidden">
+    <aside className="flex flex-col rounded-2xl border border-border bg-card/60 overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-border p-[16px]">
         <div>
@@ -69,10 +69,8 @@ export function Sidebar({ homes, activeHomeId }: SidebarProps) {
                   href={`${routes.dashboard}?home=${home.id}`}
                   className="group relative block overflow-hidden rounded-[18px] no-underline transition-all duration-150"
                   style={{
-                    border: active ? `1.5px solid ${color}60` : "1px solid hsl(var(--border))",
-                    background: active
-                      ? "linear-gradient(135deg, rgba(245,243,255,1) 0%, rgba(237,233,254,0.6) 100%)"
-                      : "white",
+                    border: active ? `1.5px solid ${color}60` : "1px solid var(--border)",
+                    background: active ? "var(--accent)" : "var(--card)",
                     boxShadow: active ? `0 4px 16px ${color}1e` : "0 1px 3px rgba(0,0,0,0.06)",
                   }}
                 >
@@ -100,7 +98,7 @@ export function Sidebar({ homes, activeHomeId }: SidebarProps) {
                     <div className="min-w-0 flex-1">
                       <p
                         className="truncate text-[15px] font-bold tracking-tight"
-                        style={{ color: active ? "#1a0f3c" : "hsl(var(--foreground))" }}
+                        style={{ color: "var(--foreground)" }}
                       >
                         {home.name}
                       </p>
@@ -117,7 +115,7 @@ export function Sidebar({ homes, activeHomeId }: SidebarProps) {
                       <EditHomeModal home={home} />
                       <ChevronRight
                         className="h-4 w-4 shrink-0 transition-colors"
-                        style={{ color: active ? color : "hsl(var(--muted-foreground))" }}
+                        style={{ color: active ? color : "var(--muted-foreground)" }}
                         strokeWidth={2.2}
                       />
                     </div>
