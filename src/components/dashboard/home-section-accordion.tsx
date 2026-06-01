@@ -21,7 +21,7 @@ export function HomeSectionAccordion({
   home, tenants, unbilledTenants, activeMonth,
   totalDue, pendingCount, billsCount, children,
 }: Props) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const color = homeColor(home.id);
 
   return (
@@ -30,7 +30,7 @@ export function HomeSectionAccordion({
       <div
         role="button"
         onClick={() => setOpen((o) => !o)}
-        className="flex w-full cursor-pointer items-center justify-between px-6 py-5 transition-colors hover:bg-muted/20"
+        className="flex w-full cursor-pointer items-center justify-between p-4 transition-colors hover:bg-muted/20"
       >
         <div className="flex items-center gap-4">
           <div
