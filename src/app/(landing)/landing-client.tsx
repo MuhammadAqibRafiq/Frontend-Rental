@@ -97,7 +97,7 @@ function IcWhatsApp({ size = 22 }: { size?: number }) {
 
 function LogoMark({ size = 36 }: { size?: number }) {
   return (
-    <div style={{ width: size, height: size, borderRadius: size * 0.28, background: "var(--primary-gradient)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 6px 18px rgba(109,40,217,0.35)", flexShrink: 0 }}>
+    <div style={{ width: size, height: size, borderRadius: size * 0.28, background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 6px 18px rgba(109,40,217,0.35)", flexShrink: 0 }}>
       <svg width={size * 0.56} height={size * 0.56} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>
       </svg>
@@ -250,7 +250,7 @@ function MobileMenu({ open, onClose, onCTA, isAuthed }: { open: boolean; onClose
                 <Link
                   href={routes.dashboard}
                   onClick={() => handleLink()}
-                  style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "15px", borderRadius: 16, textDecoration: "none", background: "var(--primary-gradient)", color: "white", boxShadow: "0 8px 24px -6px var(--shadow-primary)" }}
+                  style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "15px", borderRadius: 16, textDecoration: "none", background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", boxShadow: "0 8px 24px -6px rgba(109,40,217,0.45)" }}
                 >
                   Go to Dashboard <IcArrow size={16} sw={2.5} />
                 </Link>
@@ -275,7 +275,7 @@ function MobileMenu({ open, onClose, onCTA, isAuthed }: { open: boolean; onClose
                 </Link>
                 <button
                   onClick={() => handleLink(onCTA)}
-                  style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "15px", borderRadius: 16, border: "none", cursor: "pointer", background: "var(--primary-gradient)", color: "white", boxShadow: "0 8px 24px -6px var(--shadow-primary)" }}
+                  style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "15px", borderRadius: 16, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", boxShadow: "0 8px 24px -6px rgba(109,40,217,0.45)" }}
                 >
                   Get started — it&apos;s free <IcArrow size={16} sw={2.5} />
                 </button>
@@ -332,13 +332,13 @@ function NavBar({ onCTA, isAuthed }: { onCTA: () => void; isAuthed: boolean }) {
           {/* Desktop CTA */}
           <div className="landing-nav-cta" style={{ display: "flex", alignItems: "center", gap: 10 }}>
             {isAuthed ? (
-              <Link href={routes.dashboard} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 13, padding: "10px 16px", borderRadius: 12, textDecoration: "none", background: "var(--primary-gradient)", color: "white", boxShadow: "0 14px 32px -8px var(--shadow-primary)" }}>
+              <Link href={routes.dashboard} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 13, padding: "10px 16px", borderRadius: 12, textDecoration: "none", background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", boxShadow: "0 14px 32px -8px rgba(109,40,217,0.45)" }}>
                 Go to Dashboard <IcArrow size={14} sw={2.5} />
               </Link>
             ) : (
               <>
                 <Link href={routes.login} className="landing-signin" style={{ fontSize: 14, fontWeight: 700, color: "var(--foreground)", textDecoration: "none", padding: "10px 6px" }}>Sign in</Link>
-                <button onClick={onCTA} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 13, padding: "10px 16px", borderRadius: 12, border: "none", cursor: "pointer", background: "var(--primary-gradient)", color: "white", boxShadow: "0 14px 32px -8px var(--shadow-primary)" }}>
+                <button onClick={onCTA} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 13, padding: "10px 16px", borderRadius: 12, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", boxShadow: "0 14px 32px -8px rgba(109,40,217,0.45)" }}>
                   Get started <IcArrow size={14} sw={2.5} />
                 </button>
               </>
@@ -441,7 +441,7 @@ function Hero({ onCTA }: { onCTA: () => void }) {
               No more billing books. No more manual math. Generate every tenant's bill in one click and share it on WhatsApp — in the time it took you to find the pen.
             </p>
             <div className="reveal reveal-delay-3" style={{ marginTop: 36, display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <button onClick={onCTA} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, border: "none", cursor: "pointer", background: "var(--primary-gradient)", color: "white", boxShadow: "0 14px 32px -8px var(--shadow-primary)", animation: "pulse-violet 2.4s ease-out infinite" }}>
+              <button onClick={onCTA} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", boxShadow: "0 14px 32px -8px rgba(109,40,217,0.45)", animation: "pulse-violet 2.4s ease-out infinite" }}>
                 Get started — it&apos;s free <IcArrow size={18} sw={2.5} />
               </button>
               <a href="#how" style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, textDecoration: "none", background: "var(--accent)", color: "var(--primary)", border: "1px solid var(--border)" }}>
@@ -590,7 +590,7 @@ function PaperToDigital() {
             {[{ l: "Rent", v: "18,000" }, { l: "Electricity", v: "1,240" }, { l: "Water", v: "200" }, { l: "Maintenance", v: "500" }].map((r, i) => (
               <div key={i} style={{ display: "flex", justifyContent: "space-between", fontSize: 11, padding: "4px 0", color: "var(--muted-foreground)" }}><span>{r.l}</span><span style={{ fontWeight: 700, color: "var(--foreground)" }}>{r.v}</span></div>
             ))}
-            <div style={{ marginTop: 8, padding: "8px 12px", borderRadius: 10, background: "var(--primary-gradient)", color: "white", display: "flex", justifyContent: "space-between" }}>
+            <div style={{ marginTop: 8, padding: "8px 12px", borderRadius: 10, background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", display: "flex", justifyContent: "space-between" }}>
               <span style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em" }}>Total</span>
               <span style={{ fontSize: 14, fontWeight: 800 }}>19,940</span>
             </div>
@@ -692,7 +692,7 @@ function SampleBillDemo() {
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <SectionHeader eyebrow="Try it" title="See a bill come together" subtitle="No signup, no install — just pick a tenant, enter the meter reading, and watch the bill assemble itself." />
         <div className="demo-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, alignItems: "start" }}>
-          <div style={{ padding: 32, borderRadius: 20, background: "var(--primary-gradient)", color: "white", boxShadow: "0 24px 60px -16px rgba(109,40,217,0.5)" }}>
+          <div style={{ padding: 32, borderRadius: 20, background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", boxShadow: "0 24px 60px -16px rgba(109,40,217,0.5)" }}>
             <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 20 }}>Step 1 — pick a tenant</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
               {DEMO_TENANTS.map(t => {
@@ -750,7 +750,7 @@ function SampleBillDemo() {
                   </div>
                 ))}
               </div>
-              <div style={{ marginTop: 16, padding: "16px 18px", borderRadius: 14, background: "var(--primary-gradient)", color: "white", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ marginTop: 16, padding: "16px 18px", borderRadius: 14, background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.7)" }}>Total due</span>
                 <span style={{ fontSize: 28, fontWeight: 800, letterSpacing: "-0.025em", fontVariantNumeric: "tabular-nums" }}>
                   <Counter to={total} duration={400} key={total} />
@@ -837,7 +837,7 @@ function Pricing() {
           <div className="reveal" style={{ padding: 36, borderRadius: 20, position: "relative", border: "2px solid var(--primary)", background: "linear-gradient(180deg,var(--card) 0%,var(--accent) 100%)", boxShadow: "0 24px 60px -12px rgba(109,40,217,0.25)" }}>
             <div style={{ position: "absolute", top: -14, left: 36, padding: "5px 14px", borderRadius: 999, background: "var(--primary)", color: "white", fontSize: 11, fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>The only plan you need today</div>
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
-              <div style={{ width: 48, height: 48, borderRadius: 14, background: "var(--primary-gradient)", color: "white", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 16px -4px rgba(109,40,217,0.4)" }}><IcSparkle size={22} /></div>
+              <div style={{ width: 48, height: 48, borderRadius: 14, background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 16px -4px rgba(109,40,217,0.4)" }}><IcSparkle size={22} /></div>
               <div><div style={{ fontSize: 13, fontWeight: 800, color: "var(--primary)", letterSpacing: "0.06em", textTransform: "uppercase" }}>Free</div><h3 style={{ margin: 0, fontSize: 24, color: "var(--foreground)", fontWeight: 700, letterSpacing: "-0.025em" }}>For every landlord, everywhere</h3></div>
             </div>
             <div style={{ marginTop: 22, display: "flex", alignItems: "baseline", gap: 8 }}>
@@ -852,7 +852,7 @@ function Pricing() {
                 </li>
               ))}
             </ul>
-            <Link href={routes.register} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, border: "none", cursor: "pointer", background: "var(--primary-gradient)", color: "white", boxShadow: "0 14px 32px -8px var(--shadow-primary)", marginTop: 32, width: "100%", textDecoration: "none", boxSizing: "border-box" }}>
+            <Link href={routes.register} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, border: "none", cursor: "pointer", background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", boxShadow: "0 14px 32px -8px rgba(109,40,217,0.45)", marginTop: 32, width: "100%", textDecoration: "none", boxSizing: "border-box" }}>
               Get started — it&apos;s free <IcArrow size={18} sw={2.5} />
             </Link>
             <div style={{ marginTop: 14, textAlign: "center", fontSize: 12.5, color: "var(--muted-foreground)" }}>No credit card · Cancel any time (there&apos;s nothing to cancel)</div>
@@ -933,7 +933,7 @@ function FinalCta() {
           Five minutes from now you could be sending your next month&apos;s bills on WhatsApp instead of digging out the pen.
         </p>
         <div className="reveal reveal-delay-3" style={{ marginTop: 36, display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
-          <Link href={routes.register} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, textDecoration: "none", background: "var(--primary-gradient)", color: "white", boxShadow: "0 14px 32px -8px var(--shadow-primary)", animation: "pulse-violet 2.4s ease-out infinite" }}>
+          <Link href={routes.register} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, textDecoration: "none", background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)", color: "white", boxShadow: "0 14px 32px -8px rgba(109,40,217,0.45)", animation: "pulse-violet 2.4s ease-out infinite" }}>
             Create your free account <IcArrow size={18} sw={2.5} />
           </Link>
           <a href="#demo" style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "inherit", fontWeight: 700, fontSize: 16, padding: "18px 28px", borderRadius: 14, textDecoration: "none", background: "var(--card)", color: "var(--foreground)", border: "1px solid var(--border)" }}>

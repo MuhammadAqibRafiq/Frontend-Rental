@@ -70,7 +70,7 @@ export function LoginForm() {
             defaultChecked
             className="h-4 w-4 rounded border-border accent-violet-600"
           />
-          <span className="text-sm text-[#1a0f3c]">Keep me signed in on this device</span>
+          <span className="text-sm text-foreground">Keep me signed in on this device</span>
         </label>
 
         {state?.message && <p className="text-sm text-destructive">{state.message}</p>}

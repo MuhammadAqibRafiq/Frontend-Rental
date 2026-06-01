@@ -186,7 +186,7 @@ export function AppNav({ userName = "User" }: { userName?: string }) {
 
           {/* Logo */}
           <Link href={routes.home} className="flex items-center gap-2.5 no-underline">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl shadow-[0_4px_12px_var(--shadow-primary)]" style={{ background: "var(--primary-gradient)" }}>
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl shadow-[0_4px_12px_rgba(109,40,217,0.45)]" style={{ background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)" }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 11 12 4l9 7" />
                 <path d="M5 10v10h14V10" />
@@ -239,9 +239,9 @@ export function AppNav({ userName = "User" }: { userName?: string }) {
 
           {/* Desktop: user + logout */}
           <div className="hidden items-center gap-3 md:flex">
-            <ThemeToggle />
+            {/* <ThemeToggle /> */}
             <div className="flex items-center gap-2.5 rounded-[14px] border border-border bg-card px-3 py-1.5">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] text-[11px] font-bold text-white" style={{ background: "var(--primary-gradient)" }}>
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] text-[11px] font-bold text-white" style={{ background: "linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%)" }}>
                 {initials(userName)}
               </div>
               <div>
@@ -261,9 +261,9 @@ export function AppNav({ userName = "User" }: { userName?: string }) {
           </div>
 
           {/* Mobile: theme toggle */}
-          <div className="md:hidden">
+          {/* <div className="md:hidden">
             <ThemeToggle />
-          </div>
+          </div> */}
 
           {/* Mobile: hamburger */}
           <button
