@@ -105,3 +105,21 @@ export type ApiResponse<T> = {
   message: string;
   data: T;
 };
+
+// ─── Statement ────────────────────────────────────────────────────────────────
+
+export type StatementConfig = {
+  autoSend: boolean;
+  dayOfMonth: number;
+  sendToEmail: string | null;
+  statementMonth: "current" | "previous";
+};
+
+export type StatementHistoryEntry = {
+  month: string;
+  sentTo: string;
+  sentAt: string;
+  triggeredBy: "manual" | "auto";
+  status: "success" | "failed";
+  error?: string;
+};

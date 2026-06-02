@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Receipt, Users, LogOut, Menu } from "lucide-react";
+import { Home, Receipt, Users, FileText, LogOut, Menu } from "lucide-react";
 import { ThemeToggle } from "@/components/nav/theme-toggle";
 import { routes } from "@/lib/routes";
 import { logoutAction } from "@/controllers/auth.controller";
@@ -11,9 +11,10 @@ import { createPortal } from "react-dom";
 import { useTheme } from "next-themes";
 
 const NAV_LINKS = [
-  { href: routes.dashboard, label: "Home",  Icon: Home    },
-  { href: routes.bills,     label: "Bills", Icon: Receipt },
-  { href: routes.users,     label: "Users", Icon: Users   },
+  { href: routes.dashboard, label: "Home",      Icon: Home     },
+  { href: routes.bills,     label: "Bills",     Icon: Receipt  },
+  { href: routes.users,     label: "Users",     Icon: Users    },
+  { href: routes.statement, label: "Statement", Icon: FileText },
 ] as const;
 
 function initials(name: string) {

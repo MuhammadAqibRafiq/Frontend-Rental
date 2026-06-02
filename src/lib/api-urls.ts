@@ -20,4 +20,10 @@ export const apiUrls = {
     byTenant: (tenantId: string) => `/api/bills/tenant/${tenantId}`,
     detail: (id: string) => `/api/bills/${id}`,
   },
+  statement: {
+    monthly: (month?: string) => `/api/statement/monthly${month ? `?month=${month}` : ""}`,
+    send: (month: string) => `/api/statement/monthly/send?month=${month}`,
+    config: "/api/statement/config",
+    history: "/api/statement/history",
+  },
 } as const;

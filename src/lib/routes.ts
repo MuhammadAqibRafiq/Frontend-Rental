@@ -9,9 +9,11 @@ export const routes = {
   bills: "/bills",
   users: "/users",
 
+  statement: "/statement",
+
   logout: "/api/logout",
 } as const;
 
 export const PUBLIC_ONLY_ROUTES: string[] = [routes.login, routes.register];
 
-export const PROTECTED_PREFIXES: string[] = [routes.dashboard, routes.bills, routes.users];
+export const PROTECTED_PREFIXES: string[] = [routes.dashboard, routes.bills, routes.users, "/statement"];
