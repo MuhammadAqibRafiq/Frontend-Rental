@@ -33,17 +33,19 @@ export function Dialog({ open, onClose, title, description, children, className 
           className,
         )}
       >
-        <div className="flex items-start justify-between border-b border-border px-4 sm:px-6 py-4 shrink-0">
-          <div>
-            <h2 className="text-lg font-semibold">{title}</h2>
-            {description && <p className="mt-0.5 text-sm text-muted-foreground">{description}</p>}
+        <div className="border-b border-border px-4 sm:px-6 py-4 shrink-0">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <h2 className="text-lg font-semibold">{title}</h2>
+            </div>
+            <button
+              onClick={onClose}
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md hover:bg-accent"
+            >
+              <X className="h-4 w-4" />
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="ml-4 flex h-7 w-7 shrink-0 items-center justify-center rounded-md hover:bg-accent"
-          >
-            <X className="h-4 w-4" />
-          </button>
+          {description && <p className="mt-0.5 text-sm text-muted-foreground">{description}</p>}
         </div>
         <div className="px-4 sm:px-6 py-5 overflow-y-auto">{children}</div>
       </div>

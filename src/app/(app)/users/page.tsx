@@ -83,8 +83,8 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
           <p className="mt-1 text-xs text-muted-foreground">Generate bills from the Bills page.</p>
         </div>
       ) : (
-        <div className="rounded-xl border border-border overflow-hidden">
-          <table className="w-full text-sm">
+        <div className="rounded-xl border border-border overflow-x-auto">
+          <table className="w-full min-w-[640px] text-sm">
             <thead>
               <tr className="border-b border-border bg-muted/50 text-left text-xs uppercase tracking-wide text-muted-foreground">
                 <th className="px-4 py-3">Tenant</th>

@@ -19,6 +19,7 @@ interface TenantEntry {
 
 interface GenerateAllBillsModalProps {
   homeId: string;
+  homeName: string;
   tenants: Tenant[];
   defaultMonth: string;
 }
@@ -36,7 +37,7 @@ function isVariableFilled(entry: TenantEntry): boolean {
   );
 }
 
-export function GenerateAllBillsModal({ homeId, tenants, defaultMonth }: GenerateAllBillsModalProps) {
+export function GenerateAllBillsModal({ homeId, homeName, tenants, defaultMonth }: GenerateAllBillsModalProps) {
   const [open, setOpen] = useState(false);
   const [month, setMonth] = useState(defaultMonth);
   const [entries, setEntries] = useState<TenantEntry[]>([]);
@@ -144,32 +145,36 @@ export function GenerateAllBillsModal({ homeId, tenants, defaultMonth }: Generat
 
   return (
     <>
-      <Button size="sm" onClick={handleOpen}>
-        <Zap className="h-4 w-4" />
-        Generate All Bills
+      <Button size="xs" onClick={handleOpen} title="Generate bills for all unbilled tenants">
+        <Zap className="h-3.5 w-3.5" />
+        <span className="hidden sm:inline">Generate All Bills</span>
       </Button>
 
       <Dialog
         open={open}
         onClose={handleClose}
         title={
-          <div className="flex items-center gap-3">
-            <span>Generate All Bills</span>
-            <Input type="month" value={month} onChange={(e) => setMonth(e.target.value)} className="h-7 w-36 text-sm" />
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <span className="font-bold">Generate Bills</span>
+              <span className="text-muted-foreground">·</span>
+              <span className="text-violet-600 font-bold">{homeName}</span>
+              <span className="text-muted-foreground text-sm font-normal">({tenants.length} bill{tenants.length !== 1 ? "s" : ""})</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Input type="month" value={month} onChange={(e) => setMonth(e.target.value)} className="h-7 w-32 text-sm" />
+              <Button type="button" size="xs" variant="outline" disabled={!allCanBePaid} onClick={markAllPaid}>
+                <CheckCheck className="h-3.5 w-3.5" />
+                Mark All Paid
+              </Button>
+            </div>
           </div>
         }
-        description={`${tenants.length} tenant${tenants.length !== 1 ? "s" : ""}`}
+        description={undefined}
         className="max-w-xl"
       >
         <div className="space-y-4">
           {loadingPrepare && <p className="text-sm text-muted-foreground">Loading previous balances…</p>}
-
-          <div className="flex justify-end">
-            <Button type="button" size="sm" variant="outline" disabled={!allCanBePaid} onClick={markAllPaid}>
-              <CheckCheck className="h-3.5 w-3.5" />
-              Mark All Paid
-            </Button>
-          </div>
 
           {entries.map(({ tenant, variableAmounts, previousBalance, amountReceived }, globalIdx) => {
             const initials = tenant.name.split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();

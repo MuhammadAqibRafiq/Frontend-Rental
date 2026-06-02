@@ -61,7 +61,7 @@ export function HomeSectionAccordion({
             </div>
           )}
           <div onClick={(e) => e.stopPropagation()}>
-            <GenerateAllBillsModal homeId={home.id} tenants={unbilledTenants} defaultMonth={activeMonth} />
+            <GenerateAllBillsModal homeId={home.id} homeName={home.name} tenants={unbilledTenants} defaultMonth={activeMonth} />
           </div>
           <div
             className="flex h-8 w-8 items-center justify-center rounded-[10px] transition-transform duration-200"

@@ -24,10 +24,10 @@ export default async function BillsPage({ searchParams }: BillsPageProps) {
   return (
     <div className="space-y-6">
       {/* Page header */}
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
         <div>
           <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-violet-600">Billing</p>
-          <h1 className="mt-1 text-[28px] font-extrabold leading-tight tracking-tight">Monthly billing overview</h1>
+          <h1 className="mt-1 text-[22px] sm:text-[28px] font-extrabold leading-tight tracking-tight">Monthly billing overview</h1>
           <p className="mt-1.5 text-sm text-muted-foreground">
             Track due amounts, recovery, and outstanding balances across all your properties.
           </p>
@@ -64,7 +64,7 @@ async function OverviewTab({ homes, month }: { homes: Home[]; month?: string }) 
   return (
     <div className="space-y-8">
       {/* Stat cards */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="hidden sm:grid grid-cols-3 gap-4">
         <StatCard
           icon={Wallet}
           label="Total Due"
